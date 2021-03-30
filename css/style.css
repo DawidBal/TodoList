@@ -1,3 +1,22 @@
+:root {
+  --gradient-purple: #6a11cb;
+  --gradient-blue: #2575fc;
+}
 
+body {
+  background-image: linear-gradient(to right, var(--gradient-purple) 0%, var(--gradient-blue) 100%);
+}
+
+.priority-1 {
+  background: rgba(255, 0, 0, 0.5);
+}
+
+.priority-2 {
+  background: rgba(0, 102, 255, 0.5);
+}
+
+.priority-3 {
+  background: rgba(255, 136, 0, 0.5);
+}
 
 /*# sourceMappingURL=style.css.map */
