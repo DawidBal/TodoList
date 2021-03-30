@@ -1,0 +1,10 @@
+:root {
+  --gradient-purple: #6a11cb;
+  --gradient-blue: #2575fc;
+}
+
+$main-gradient: linear-gradient(
+  to right,
+  var(--gradient-purple) 0%,
+  var(--gradient-blue) 100%
+);
