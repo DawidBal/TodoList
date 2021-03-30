@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="main.js" defer></script>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/style.css">
+    
+    <title>Todo List</title>
+</head>
+<body>
+    <header class="c-header">
+        <h1 class="c-header__title">Get it done!</h1>
+    </header>
+    <main>
+        <aside>
+
+        </aside>
+        <section>
+            <form class="c-form" name="todoForm">
+                <label for="title">Task name</label>
+                <input class="c-form__name" type="text" id="title" name="title" required>
+                <select class="c-form__priority" id="priority" name="priority">
+                    <option value="3">Low</option>
+                    <option value="2">Medium</option>
+                    <option value="1">High</option>
+                </select>
+                <input type="submit" value="Add task">
+            </form>
+        <ul class="js-tasklist">
+
+        </ul>
+        </section>
+
+    </main>
+    
+</body>
+</html>
