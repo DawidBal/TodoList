@@ -1,31 +1,55 @@
+import taskManager from './taskManager.js';
+
 const DOM = (() => {
+
     const taskForm = document.querySelector('.c-form');
     const taskList = document.querySelector('.js-tasklist');
 
-    // TODO: Make function populate only newest added item 
-    const populateTasks = (taskArr) => {
+    // TODO: Refactor function
+    const showAllTasks = (taskArr) => {
         taskList.innerHTML = 
         taskArr.map((task, index) => {
-            return `<li>
-            <div class="priority-${task.priority}">
+            return `
+            <div data-index="${index}" class="priority-${task.priority}">
                 <h2>${task.title}</h2>
                 <label for="task-${index}"></label>
-                <input type="checkbox" data-index="${index}" name="" id="task-${index}" ${task.completed === true ? `disabled` : ``}>
-                <button data-index="${index}">X</button>
-            </div>
-            </li>`
+                <input type="checkbox" data-index="${index} id="task-${index}" ${task.completed === true ? `disabled` : ``}>
+                <button>X</button>
+            </div>`
         }).join('');
     };
 
-    const removeItem = (e, arr) => {
-        if(!e.target.matches('button')) return;
-        const index = e.target.dataset.index;
-        arr.splice(index, 1);
-        console.log(arr);
-    }
+    // TODO: Refactor function
+    const showTask = (task, index) => {
+        const newElement = document.createElement('div');
+        newElement.setAttribute('data-index', index);
+        newElement.classList.add(`priority-${task.priority}`);
+        newElement.innerHTML += `
+                <h2>${task.title}</h2>
+                <label for="task-${index}"></label>
+                <input type="checkbox" data-index="${index} id="task-${index}" ${task.completed === true ? `disabled` : ``}>
+                <button>X</button>
+            `;
+        taskList.append(newElement);
+    };
+    
+   const removeTaskElement = (index) => {
+       const element = document.querySelector(`[data-index="${index}"`);
+       element.remove();
+   };
 
-    return { taskForm, populateTasks }
+    const removeTask = (arr, event) => {
+        if(!event.target.matches('button')) return;
+        const index = event.target.parentNode.dataset.index;
+        arr.splice(index, 1);
+        removeTaskElement(index);
+        showAllTasks(arr);
+    };
+    
+    taskForm.addEventListener('submit', taskManager.addNewTask);
+    taskList.addEventListener('click', removeTask.bind(null, taskManager.todosArr));
+
+    return { taskForm, showAllTasks, showTask }
 
 })();
-
 export default DOM
