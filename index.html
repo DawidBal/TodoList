@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="main.js" defer></script>
+    <script src="./main.js" defer></script>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/style.css">
     
@@ -23,15 +23,17 @@
                 <label for="title">Task name</label>
                 <input class="c-form__name" type="text" id="title" name="title" required>
                 <select class="c-form__priority" id="priority" name="priority">
-                    <option value="3">Low</option>
+                    <option selected value="3">Low</option>
                     <option value="2">Medium</option>
                     <option value="1">High</option>
                 </select>
+                <select class="c-form__project" id="project" name="project">
+                    <option selected value="unset">Unset</option>
+                    <option value="work">Work</option>
+                </select>
                 <input type="submit" value="Add task">
             </form>
-        <ul class="js-tasklist">
-
-        </ul>
+        <div class="c-tasklist js-tasklist"></div>
         </section>
 
     </main>
