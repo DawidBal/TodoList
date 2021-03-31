@@ -12,10 +12,11 @@
 //     return Object.assign({}, init);
 // }
 
-const todoItem = ({title, priority}) => {
+const todoItem = ({title, priority, project}) => {
     const init = {
         "title": title,
         "priority": priority,
+        "project": project,
         "completed": false,
     }
 
