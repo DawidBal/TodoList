@@ -1,5 +1,5 @@
-import todoItem from './todoCreation.js';
 import DOM from './DOMElements.js';
+import todoItem from './todoCreation.js';
 
 const taskManager = (() => {
 
@@ -17,16 +17,24 @@ const taskManager = (() => {
 
     const formData = new FormData(e.target);
     const newTodo = createTodo(formData);
-    console.log(newTodo);
-
     addItemToArray(todosArr, newTodo);
     DOM.showTask(newTodo, todosArr.indexOf(newTodo));
-    console.log(todosArr);
-
     e.target.reset();
     };
 
-return { todosArr, addNewTask }
+    const removeTask = (arr, event) => {
+        if(!event.target.matches('button')) return;
+        const taskIndex = event.target.parentNode.dataset.index;
+        arr.splice(taskIndex, 1);
+        DOM.removeTaskElement(taskIndex);
+        DOM.showAllTasks(arr);
+    };
+
+    const fireEvents = () => {
+        DOM.taskList.addEventListener('click', removeTask.bind(null, todosArr));
+    }
+
+return { todosArr, addNewTask, fireEvents }
 
 })();
 
