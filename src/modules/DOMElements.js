@@ -5,32 +5,29 @@ const DOM = (() => {
     const taskForm = document.querySelector('.c-form');
     const taskList = document.querySelector('.js-tasklist');
 
+    const getTaskHTMLCode = (task, index) => {
+        const newElement = document.createElement('div');
+        newElement.setAttribute('data-index', index);
+        newElement.classList.add(`priority-${task.priority}`);
+        newElement.innerHTML += 
+            `<h2>${task.title}</h2>
+            <label for="task-${index}"></label>
+            <input type="checkbox" data-index="${index} id="task-${index}" ${task.completed === true ? `disabled` : ``}>
+            <button>X</button>`;
+        return newElement;
+    };
+
     // TODO: Refactor function
     const showAllTasks = (taskArr) => {
-        taskList.innerHTML = 
-        taskArr.map((task, index) => {
-            return `
-            <div data-index="${index}" class="priority-${task.priority}">
-                <h2>${task.title}</h2>
-                <label for="task-${index}"></label>
-                <input type="checkbox" data-index="${index} id="task-${index}" ${task.completed === true ? `disabled` : ``}>
-                <button>X</button>
-            </div>`
-        }).join('');
+        taskList.innerHTML = taskArr.map((task, index) => {
+            return getTaskHTMLCode(task, index);
+        })
+        .join('');
     };
 
     // TODO: Refactor function
     const showTask = (task, index) => {
-        const newElement = document.createElement('div');
-        newElement.setAttribute('data-index', index);
-        newElement.classList.add(`priority-${task.priority}`);
-        newElement.innerHTML += `
-                <h2>${task.title}</h2>
-                <label for="task-${index}"></label>
-                <input type="checkbox" data-index="${index} id="task-${index}" ${task.completed === true ? `disabled` : ``}>
-                <button>X</button>
-            `;
-        taskList.append(newElement);
+        taskList.append(getTaskHTMLCode(task, index));
     };
     
    const removeTaskElement = (index) => {
@@ -38,18 +35,9 @@ const DOM = (() => {
        element.remove();
    };
 
-    const removeTask = (arr, event) => {
-        if(!event.target.matches('button')) return;
-        const index = event.target.parentNode.dataset.index;
-        arr.splice(index, 1);
-        removeTaskElement(index);
-        showAllTasks(arr);
-    };
-    
     taskForm.addEventListener('submit', taskManager.addNewTask);
-    taskList.addEventListener('click', removeTask.bind(null, taskManager.todosArr));
 
-    return { taskForm, showAllTasks, showTask }
+    return { taskForm, taskList, showAllTasks, showTask, removeTaskElement }
 
 })();
 export default DOM
