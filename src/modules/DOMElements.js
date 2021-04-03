@@ -9,23 +9,22 @@ const DOM = (() => {
         const newElement = document.createElement('div');
         newElement.setAttribute('data-index', index);
         newElement.classList.add(`priority-${task.priority}`);
-        newElement.innerHTML += 
+        newElement.innerHTML = 
             `<h2>${task.title}</h2>
             <label for="task-${index}"></label>
-            <input type="checkbox" data-index="${index} id="task-${index}" ${task.completed === true ? `disabled` : ``}>
+            <input type="checkbox" data-index="${index}" id="task-${index}" ${task.completed === true ? `disabled` : ``}>
             <button>X</button>`;
         return newElement;
     };
 
-    // TODO: Refactor function
     const showAllTasks = (taskArr) => {
-        taskList.innerHTML = taskArr.map((task, index) => {
-            return getTaskHTMLCode(task, index);
-        })
-        .join('');
+        taskList.innerHTML = '';
+        taskArr.forEach((task, index) => {
+            const newTask = getTaskHTMLCode(task, index);
+            taskList.appendChild(newTask);
+        });
     };
 
-    // TODO: Refactor function
     const showTask = (task, index) => {
         taskList.append(getTaskHTMLCode(task, index));
     };
