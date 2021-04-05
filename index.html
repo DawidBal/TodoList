@@ -7,35 +7,57 @@
     <script src="./main.js" defer></script>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/style.css">
-    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
     <title>Todo List</title>
 </head>
 <body>
     <header class="c-header">
+        <svg class="c-header__logo" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+            <path d="M19 22h-19v-19h19v2h-1v-1h-17v17h17v-9.502h1v10.502zm5-19.315l-14.966 15.872-5.558-6.557.762-.648 4.833 5.707 14.201-15.059.728.685z"/>
+        </svg>
         <h1 class="c-header__title">Get it done!</h1>
     </header>
-    <main>
-        <aside>
+    
+    <div class="c-todo-form">
+        <form class="c-form js-todo-from" name="todoForm">
+            <label for="title">Task name</label>
+            <input class="c-form__name" type="text" id="title" name="title" required>
+            <label for="description">Task description</label>
+            <input class="c-form__name" type="text" id="description" name="description">
+            <label for="end-date">End Date</label>
+            <input type="date" name="end-date" id="end-date">
+            <select class="c-form__priority" id="priority" name="priority">
+                <option selected value="3">Low</option>
+                <option value="2">Medium</option>
+                <option value="1">High</option>
+            </select>
+            <select class="c-form__project" id="project" name="project">
+                <option selected value="unset">Inbox</option>
+            </select>
+            <input type="submit" value="Add task">
+        </form>
+    </div>
+    
+    <div class="c-project-form">
+        <form class="c-form js-project-from" name="todoForm">
+            <label for="name">Project name</label>
+            <input class="c-form__name" type="text" id="name" name="name" required>
+            <input type="submit" value="Add project">
+        </form>
+    </div>
 
+    <main class="c-main">
+        <aside class="c-menu">
+            <h2 class="c-menu__title">Menu</h2>
+            <div class="c-menu__projects js-project-list">
+
+            </div>
         </aside>
-        <section>
-            <form class="c-form" name="todoForm">
-                <label for="title">Task name</label>
-                <input class="c-form__name" type="text" id="title" name="title" required>
-                <select class="c-form__priority" id="priority" name="priority">
-                    <option selected value="3">Low</option>
-                    <option value="2">Medium</option>
-                    <option value="1">High</option>
-                </select>
-                <select class="c-form__project" id="project" name="project">
-                    <option selected value="unset">Unset</option>
-                    <option value="work">Work</option>
-                </select>
-                <input type="submit" value="Add task">
-            </form>
-        <div class="c-tasklist js-tasklist"></div>
+        <section class="c-tasklist">
+            <h2 class="c-tasklist__title js-tasklist__title">Inbox</h2>
+        <div class="c-tasklist__container js-tasklist"></div>
         </section>
-
     </main>
     
 </body>
