@@ -1,10 +1,15 @@
 import taskManager from './taskManager.js';
+import projectManager from './projectManager.js';
 
 const DOM = (() => {
 
-    const taskForm = document.querySelector('.c-form');
+    const taskForm = document.querySelector('.js-todo-from');
+    const projectForm = document.querySelector('.js-project-from');
     const taskList = document.querySelector('.js-tasklist');
+    const projectList = document.querySelector('.js-project-list');
 
+
+    // Tasks
     const getTaskHTMLCode = (task, index) => {
         const newElement = document.createElement('div');
         newElement.setAttribute('data-index', index);
@@ -34,9 +39,35 @@ const DOM = (() => {
        element.remove();
    };
 
-    taskForm.addEventListener('submit', taskManager.addNewTask);
+    // Projects
 
-    return { taskForm, taskList, showAllTasks, showTask, removeTaskElement }
+    const getProjectHTMLCode = (projectName) => {
+        const newElement = document.createElement('p'); // TODO: Change for buttons, to manage events
+        newElement.textContent = projectName;
+        return newElement
+    };
+
+    const showProject = (projectName) => {
+        projectList.append(getProjectHTMLCode(projectName));
+    }
+
+    const showAllProjects = () => {
+        projectList.innerHTML = '';
+        const projectNames = projectManager.getProjectNames();
+        projectNames.forEach(projectName => {
+            projectList.append(getProjectHTMLCode(projectName));
+        });
+    }
+
+    // Events 
+    taskForm.addEventListener('submit', taskManager.addNewTask);
+    projectForm.addEventListener('submit', projectManager.addNewProject);
+
+    const init = () => {
+        showAllProjects();
+    }
+
+    return { taskForm, taskList, showAllTasks, showTask, removeTaskElement, showProject, init }
 
 })();
 export default DOM
