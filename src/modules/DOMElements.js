@@ -10,28 +10,28 @@ const DOM = (() => {
 
 
     // Tasks
-    const getTaskHTMLCode = (task, index) => {
-        const newElement = document.createElement('div');
-        newElement.setAttribute('data-index', index);
-        newElement.classList.add(`priority-${task.priority}`);
-        newElement.innerHTML = 
+    const generateTaskHTML = (task, index) => {
+        const newTask = document.createElement('div');
+        newTask.setAttribute('data-index', index);
+        newTask.classList.add(`priority-${task.priority}`);
+        newTask.innerHTML = 
             `<h2>${task.title}</h2>
             <label for="task-${index}"></label>
             <input type="checkbox" data-index="${index}" id="task-${index}" ${task.completed === true ? `disabled` : ``}>
             <button>X</button>`;
-        return newElement;
+        return newTask;
     };
 
     const showAllTasks = (taskArr) => {
         taskList.innerHTML = '';
         taskArr.forEach((task, index) => {
-            const newTask = getTaskHTMLCode(task, index);
-            taskList.appendChild(newTask);
+            const newTask = generateTaskHTML(task, index);
+            taskList.append(newTask);
         });
     };
 
     const showTask = (task, index) => {
-        taskList.append(getTaskHTMLCode(task, index));
+        taskList.append(generateTaskHTML(task, index));
     };
     
    const removeTaskElement = (index) => {
@@ -40,34 +40,58 @@ const DOM = (() => {
    };
 
     // Projects
+   const generateOptionHTML = (projectName) => {
+        const newOption = document.createElement('option');
+        newOption.setAttribute('value', projectName);
+        newOption.textContent = projectName;
+        return newOption
+   }
+   
+    const setTaskFormOptions = () => {
+        const list = document.querySelector('.js-projects');
+        const projects = projectManager.getProjectNames();
+        projects.forEach(projectName => {
+            list.append(generateOptionHTML(projectName));
+        });
+    };
 
-    const getProjectHTMLCode = (projectName) => {
-        const newElement = document.createElement('p'); // TODO: Change for buttons, to manage events
-        newElement.textContent = projectName;
-        return newElement
+    const setNewTaskOption = (projectName) => {
+        const list = document.querySelector('.js-projects');
+        list.append(generateOptionHTML(projectName));
+    }
+
+    const generateProjectHTML = (projectName) => {
+        const newProject = document.createElement('p'); // TODO: Change for buttons, to manage events
+        newProject.textContent = projectName;
+        return newProject
     };
 
     const showProject = (projectName) => {
-        projectList.append(getProjectHTMLCode(projectName));
+        projectList.append(generateProjectHTML(projectName));
     }
 
     const showAllProjects = () => {
         projectList.innerHTML = '';
         const projectNames = projectManager.getProjectNames();
         projectNames.forEach(projectName => {
-            projectList.append(getProjectHTMLCode(projectName));
+            projectList.append(generateProjectHTML(projectName));
         });
     }
 
-    // Events 
-    taskForm.addEventListener('submit', taskManager.addNewTask);
-    projectForm.addEventListener('submit', projectManager.addNewProject);
+    // Events
+    const fireEvents = () => {
+        taskForm.addEventListener('submit', taskManager.addNewTask);
+        projectForm.addEventListener('submit', projectManager.addNewProject);
+    }
+    
 
     const init = () => {
         showAllProjects();
+        setTaskFormOptions();
+        fireEvents();
     }
 
-    return { taskForm, taskList, showAllTasks, showTask, removeTaskElement, showProject, init }
+    return { taskForm, taskList, showAllTasks, showTask, removeTaskElement, showProject, init, setTaskFormOptions, setNewTaskOption }
 
 })();
 export default DOM

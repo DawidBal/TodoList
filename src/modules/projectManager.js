@@ -15,6 +15,7 @@ const projectManager = (() => {
         const projectName = e.target.querySelector('input').value;
         projectList[projectName] = [];
         DOM.showProject(projectName);
+        DOM.setNewTaskOption(projectName);
         e.target.reset();
     };
 

@@ -18,27 +18,24 @@
         </svg>
         <h1 class="c-header__title">Get it done!</h1>
     </header>
-    
+
     <div class="c-todo-form">
-        <form class="c-form js-todo-from" name="todoForm">
-            <label for="title">Task name</label>
-            <input class="c-form__name" type="text" id="title" name="title" required>
-            <label for="description">Task description</label>
-            <input class="c-form__name" type="text" id="description" name="description">
-            <label for="end-date">End Date</label>
-            <input type="date" name="end-date" id="end-date">
-            <select class="c-form__priority" id="priority" name="priority">
-                <option selected value="3">Low</option>
-                <option value="2">Medium</option>
-                <option value="1">High</option>
-            </select>
-            <select class="c-form__project" id="project" name="project">
-                <option selected value="unset">Inbox</option>
-            </select>
-            <input type="submit" value="Add task">
-        </form>
+            <form class="c-form js-todo-from" name="todoForm">
+                <label for="title">Task name</label>
+                <input class="c-form__name" type="text" id="title" name="title" required>
+                <label for="description">Task description</label>
+                <input class="c-form__name" type="text" id="description" name="description">
+                <label for="end-date">End Date</label>
+                <input type="date" name="end-date" id="end-date">
+                <select class="c-form__priority" id="priority" name="priority">
+                    <option selected value="3">Low</option>
+                    <option value="2">Medium</option>
+                    <option value="1">High</option>
+                </select>
+                <select class="c-form__project js-projects" id="project" name="project"></select>
+                <input type="submit" value="Add task">
+            </form>
     </div>
-    
     <div class="c-project-form">
         <form class="c-form js-project-from" name="todoForm">
             <label for="name">Project name</label>
@@ -49,7 +46,10 @@
 
     <main class="c-main">
         <aside class="c-menu">
-            <h2 class="c-menu__title">Menu</h2>
+            <header class="c-menu__nav">
+            <h2 class="c-menu__title">Projects</h2>
+            <svg class="c-menu__icon"xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+            </header>
             <div class="c-menu__projects js-project-list">
 
             </div>
