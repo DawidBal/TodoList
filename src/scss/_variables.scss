@@ -1,10 +1,12 @@
 :root {
-  --gradient-purple: #6a11cb;
-  --gradient-blue: #2575fc;
+  /* Background */
+  --gradient-black: hsl(0, 0%, 0%);
+  --gradient-grey: hsl(0, 0%, 26%);
+  --white: hsl(0, 100%, 100%);
 }
 
 $main-gradient: linear-gradient(
   to right,
-  var(--gradient-purple) 0%,
-  var(--gradient-blue) 100%
+  var(--gradient-grey) 0%,
+  var(--gradient-black) 100%
 );

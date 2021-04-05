@@ -1,10 +1,51 @@
 :root {
-  --gradient-purple: #6a11cb;
-  --gradient-blue: #2575fc;
+  /* Background */
+  --gradient-black: hsl(0, 0%, 0%);
+  --gradient-grey: hsl(0, 0%, 26%);
+  --white: hsl(0, 100%, 100%);
 }
 
 body {
-  background-image: linear-gradient(to right, var(--gradient-purple) 0%, var(--gradient-blue) 100%);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  color: white;
+  font-family: "Cairo", sans-serif;
+  background-image: linear-gradient(to right, var(--gradient-grey) 0%, var(--gradient-black) 100%);
+}
+
+.c-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+}
+.c-header__logo {
+  fill: var(--white);
+}
+
+.c-main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+}
+
+.c-menu {
+  padding: 1rem 0 1rem 1rem;
+}
+
+.c-tasklist {
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.c-todo-form,
+.c-project-form {
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 50%;
+  bottom: 50%;
 }
 
 .priority-1 {

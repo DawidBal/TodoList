@@ -1,9 +1,46 @@
 @use 'variables';
 
 body {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  color: white;
+  font-family: 'Cairo', sans-serif;
   background-image: variables.$main-gradient;
 }
 
+.c-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  &__logo {
+    fill: var(--white);
+  }
+}
+.c-main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+}
+.c-menu {
+  padding: 1rem 0 1rem 1rem;
+}
+
+.c-tasklist {
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.c-todo-form,
+.c-project-form {
+  // display: none;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 50%;
+  bottom: 50%;
+}
 .priority-1 {
   background: rgba(255, 0, 0, 0.5);
 }
