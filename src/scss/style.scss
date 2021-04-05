@@ -23,13 +23,33 @@ body {
   grid-template-columns: auto 1fr;
   gap: 1rem;
 }
-.c-menu {
+.c-projects {
   padding: 1rem 0 1rem 1rem;
+  &__nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  &__title {
+    font-size: 1.5rem;
+  }
+  &__icon {
+    fill: var(--white);
+    transition: transform 0.3s ease-in-out;
+    &:hover {
+      transform: rotate(90deg);
+    }
+  }
 }
 
 .c-tasklist {
   margin: 1rem auto;
   text-align: center;
+  &__container {
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .c-todo-form,
@@ -40,6 +60,11 @@ body {
   right: 50%;
   top: 50%;
   bottom: 50%;
+}
+
+.c-project-form {
+  // display: none;
+  top: 35%;
 }
 .priority-1 {
   background: rgba(255, 0, 0, 0.5);
