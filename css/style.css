@@ -3,6 +3,7 @@
   --gradient-black: hsl(0, 0%, 0%);
   --gradient-grey: hsl(0, 0%, 26%);
   --white: hsl(0, 100%, 100%);
+  --main: hsl(216, 76%, 31%);
 }
 
 body {
@@ -30,13 +31,33 @@ body {
   gap: 1rem;
 }
 
-.c-menu {
+.c-projects {
   padding: 1rem 0 1rem 1rem;
+}
+.c-projects__nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.c-projects__title {
+  font-size: 1.5rem;
+}
+.c-projects__icon {
+  fill: var(--white);
+  transition: transform 0.3s ease-in-out;
+}
+.c-projects__icon:hover {
+  transform: rotate(90deg);
 }
 
 .c-tasklist {
   margin: 1rem auto;
   text-align: center;
+}
+.c-tasklist__container {
+  margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .c-todo-form,
@@ -46,6 +67,10 @@ body {
   right: 50%;
   top: 50%;
   bottom: 50%;
+}
+
+.c-project-form {
+  top: 35%;
 }
 
 .priority-1 {
