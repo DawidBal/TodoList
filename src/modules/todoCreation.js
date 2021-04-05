@@ -1,19 +1,19 @@
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 
-const todoItem = ({title, description, priority, project}) => {
+const todoItem = ({ title, description, priority, project, endTask = '' }) => {
+  const getTimeToday = () => format(new Date(), 'dd/MM/yyyy');
 
-    const getTimeToday = () => format(new Date(), 'dd/MM/yyyy');
+  const init = {
+    title,
+    description,
+    priority,
+    project,
+    startTask: getTimeToday(),
+    endTask,
+    completed: false,
+  };
 
-    const init = {
-        "title": title,
-        "description": description,
-        "priority": priority,
-        "project": project,
-        "startTask": getTimeToday(),
-        "completed": false,
-    }
-
-    return Object.assign({}, init);
-}
+  return Object.assign({}, init);
+};
 
 export default todoItem;

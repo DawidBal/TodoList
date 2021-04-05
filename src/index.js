@@ -3,9 +3,7 @@ import taskManager from './modules/taskManager.js';
 import todoItem from './modules/todoCreation.js';
 
 
-const app = (() => {
-    taskManager.fireEvents();    
+const app = (() => { 
     DOM.init();
-
 })();
 
