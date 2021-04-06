@@ -1,6 +1,7 @@
 import taskManager from './taskManager.js';
 import projectManager from './projectManager.js';
 import { format } from 'date-fns';
+import { startOfToday, startOfTomorrow } from 'date-fns'
 
 // TODO: Divide this module into two modules - Task DOM module, and Projects DOM module.
 const DOM = (() => {
@@ -11,6 +12,8 @@ const DOM = (() => {
   const selectList = document.querySelector('.js-projects');
   const projectsMenu = document.querySelector('.js-newProject');
   const inboxBtn = document.querySelector('.js-inbox');
+  const todayBtn = document.querySelector('.js-today');
+  const tomorrowBtn = document.querySelector('.js-tomorrow');
 
   // Tasks
   const generateTaskHTML = (task, index) => {
@@ -42,6 +45,14 @@ const DOM = (() => {
     const element = document.querySelector(`[data-index="${index}"`);
     element.remove();
   };
+
+  const showTimeTasks = (date, e) => {
+    updateListTitle(e.target.textContent);
+    const tasks = taskManager.tasks.filter(task => {
+      return new Date(task.endDate).getDate() - date.getDate() === 0;
+    });
+    showTasks(tasks);
+  }
 
   // Projects
   const generateOptionHTML = (projectName) => {
@@ -103,6 +114,8 @@ const DOM = (() => {
     taskList.addEventListener('click', taskManager.removeTask);
     projectList.addEventListener('click', switchActiveProject);
     inboxBtn.addEventListener('click', switchActiveProject);
+    todayBtn.addEventListener('click', showTimeTasks.bind(null, startOfToday()));
+    tomorrowBtn.addEventListener('click', showTimeTasks.bind(null, startOfTomorrow()));
   };
 
   // Utilities
