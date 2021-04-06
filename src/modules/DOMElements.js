@@ -2,12 +2,15 @@ import taskManager from './taskManager.js';
 import projectManager from './projectManager.js';
 import { format } from 'date-fns';
 
+// TODO: Divide this module into two modules - Task DOM module, and Projects DOM module.
 const DOM = (() => {
   const taskForm = document.querySelector('.js-todo-from');
   const projectForm = document.querySelector('.js-project-from');
   const taskList = document.querySelector('.js-tasklist');
   const projectList = document.querySelector('.js-project-list');
   const selectList = document.querySelector('.js-projects');
+  const projectsMenu = document.querySelector('.js-newProject');
+  const inboxBtn = document.querySelector('.js-inbox');
 
   // Tasks
   const generateTaskHTML = (task, index) => {
@@ -22,9 +25,12 @@ const DOM = (() => {
     return newTask;
   };
 
-  const showAllTasks = (taskArr) => {
+  const showTasks = (taskArr) => {
     taskList.innerHTML = '';
-    taskArr.forEach((task, index) => {
+    taskManager.saveTasks(taskArr);
+    taskArr.forEach((task) => {
+      const index = taskManager.tasks.indexOf(task);
+      if(index === -1) return
       const newTask = generateTaskHTML(task, index);
       taskList.append(newTask);
     });
@@ -37,17 +43,6 @@ const DOM = (() => {
     element.remove();
   };
 
-  const removeTask = (event) => {
-    if (!event.target.matches('button')) return;
-    const taskIndex = event.target.parentNode.dataset.index;
-    const taskProject = projectManager.getProjectArray(
-      projectManager.getActiveProject()
-    );
-    taskProject.splice(taskIndex, 1);
-    removeTaskElement(taskIndex);
-    showAllTasks(taskProject);
-  };
-
   // Projects
   const generateOptionHTML = (projectName) => {
     const newOption = document.createElement('option');
@@ -57,7 +52,7 @@ const DOM = (() => {
   };
 
   const setTaskFormOptions = () => {
-    const projects = projectManager.getProjectNames();
+    const projects = projectManager.projects;
     projects.forEach((projectName) => {
       selectList.append(generateOptionHTML(projectName));
     });
@@ -76,8 +71,9 @@ const DOM = (() => {
 
   const showAllProjects = () => {
     projectList.innerHTML = '';
-    const projectNames = projectManager.getProjectNames();
+    const projectNames = projectManager.projects;
     projectNames.forEach((projectName) => {
+      if(projectName === 'Inbox') return
       projectList.append(generateProjectHTML(projectName));
     });
   };
@@ -97,16 +93,16 @@ const DOM = (() => {
     projectManager.setActiveProject(projectName);
     updateListTitle(projectName);
     setActiveOption(projectName);
-    showAllTasks(projectManager.getProjectArray(projectManager.getActiveProject())
-    );
+    showTasks(taskManager.getTasksByProject(projectName));
   };
 
   // Events
   const fireEvents = () => {
     taskForm.addEventListener('submit', taskManager.addNewTask);
     projectForm.addEventListener('submit', projectManager.addNewProject);
-    taskList.addEventListener('click', removeTask);
+    taskList.addEventListener('click', taskManager.removeTask);
     projectList.addEventListener('click', switchActiveProject);
+    inboxBtn.addEventListener('click', switchActiveProject);
   };
 
   // Utilities
@@ -131,7 +127,7 @@ const DOM = (() => {
   return {
     taskForm,
     taskList,
-    showAllTasks,
+    showTasks,
     showTask,
     removeTaskElement,
     showNewProject,

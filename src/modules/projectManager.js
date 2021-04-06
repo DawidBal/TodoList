@@ -1,47 +1,30 @@
 import DOM from './DOMElements';
 
 const projectManager = (() => {
-  const projectList = {
-    Inbox: [],
-  };
+
+  const projects = ['Inbox'];
 
   let activeProject = 'Inbox';
-
-  const setActiveProject = (projectName) => {
-    if (projectList.hasOwnProperty(projectName)) {
-      activeProject = projectName;
-    } else {
-      throw new Error("ERROR");
-    }
-  };
-
-  const getActiveProject = () => activeProject;
-
-  const getProjectNames = () => Object.keys(projectList);
-
-  const getProjectArray = (projectName) => projectList[projectName];
-
-  const debugprojList = () => console.log(projectList);
 
   const addNewProject = (e) => {
     e.preventDefault();
     const projectName = e.target.querySelector('input').value;
-    projectList[projectName] = [];
+    projects.push(projectName);
     DOM.showNewProject(projectName);
     DOM.setNewTaskOption(projectName);
-    e.target.reset();
-  };
+    e.target.reset()
+  }
 
-  return {
-    activeProject,
-    projectList,
-    addNewProject,
-    getProjectNames,
-    getProjectArray,
-    debugprojList,
-    setActiveProject,
-    getActiveProject,
-  };
+  const getActiveProject = () => activeProject;
+
+  const setActiveProject = (projectName) => {
+    if(projects.includes(projectName)) {
+      activeProject = projectName;
+    } else {
+      throw new Error("Missing project!");
+    }
+  }
+  return {projects, getActiveProject, setActiveProject, addNewProject}
 })();
 
 export default projectManager;
