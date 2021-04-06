@@ -30,7 +30,7 @@ const DOM = (() => {
 
   const showTasks = (taskArr) => {
     taskList.innerHTML = '';
-    taskManager.saveTasks(taskArr);
+    taskManager.saveActiveTasks(taskArr);
     taskArr.forEach((task) => {
       const index = taskManager.tasks.indexOf(task);
       if(index === -1) return
@@ -109,13 +109,21 @@ const DOM = (() => {
 
   // Events
   const fireEvents = () => {
+
+    // Task Events
     taskForm.addEventListener('submit', taskManager.addNewTask);
-    projectForm.addEventListener('submit', projectManager.addNewProject);
     taskList.addEventListener('click', taskManager.removeTask);
+
+    // Project Events
+    projectForm.addEventListener('submit', projectManager.addNewProject);
     projectList.addEventListener('click', switchActiveProject);
+
     inboxBtn.addEventListener('click', switchActiveProject);
     todayBtn.addEventListener('click', showTimeTasks.bind(null, startOfToday()));
     tomorrowBtn.addEventListener('click', showTimeTasks.bind(null, startOfTomorrow()));
+
+    // projectsMenu.addEventListener('mouseenter', showNewProjBtn);
+    // projectsMenu.addEventListener('mouseleave', hideNewProjBtn);
   };
 
   // Utilities

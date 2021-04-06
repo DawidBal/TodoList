@@ -6,13 +6,13 @@ const taskManager = (() => {
 
   const tasks = [];
 
-  let activeTasks = [];
+  let visibleTasks = [];
 
   const saveTasks = (taskArray) => {
-    activeTasks = Array.from(taskArray);
+    visibleTasks = Array.from(taskArray);
   }
 
-  const getSavedTasks = () => activeTasks;
+  const getSavedTasks = () => visibleTasks;
 
   const addItemToArray = (arr, item) => arr.push(item);
 
@@ -33,7 +33,7 @@ const taskManager = (() => {
     addItemToArray(tasks, newTodo);
     if (newTodo.project === projectManager.getActiveProject()) {
       DOM.showTask(newTodo, tasks.indexOf(newTodo));
-      activeTasks.push(newTodo);
+      visibleTasks.push(newTodo);
     }
     e.target.reset();
   };
