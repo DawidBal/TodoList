@@ -1,33 +1,7 @@
 @use 'variables';
-@use 'mixins';
-
-body {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  color: white;
-  font-family: 'Cairo', sans-serif;
-  background: var(--bg);
-}
-
-.l-flexColumn {
-  @include mixins.flexColumn;
-}
-
-.hidden {
-  display: none;
-}
-
-.btn {
-  font-size: 1.2rem;
-  color: var(--white);
-  border: none;
-  background: none;
-  border-radius: 5px;
-  transition: background 0.4s ease;
-  &:hover {
-    background: var(--btn-hover);
-  }
-}
+@use 'global';
+@use './components/projects';
+@use './components/tasks';
 
 .c-header {
   display: flex;
@@ -36,77 +10,13 @@ body {
   width: 100%;
   padding: 1rem;
   &__logo {
-    fill: var(--white);
+    width: 35px;
+    height: 35px;
   }
 }
 .c-main {
   display: grid;
   grid-template-columns: 15% 1fr;
-}
-
-.c-projects {
-  padding: 1rem;
-  background: var(--bg-aside);
-
-  &__nav {
-    flex: 1;
-    &:hover .c-show-form__btn {
-      transform: translateY(0);
-      opacity: 0.3;
-      &:hover {
-        opacity: 1;
-        .c-show-form__icon {
-          transform: rotate(90deg);
-        }
-      }
-    }
-  }
-
-  &__title {
-    font-size: 2rem;
-    margin: 0 0.5rem;
-  }
-
-  &__item {
-    width: 100%;
-  }
-}
-
-.c-menu {
-  &__item {
-    padding: 0.5rem;
-    text-align: left;
-  }
-}
-
-.c-show-form {
-  &__icon {
-    fill: var(--white);
-    transition: transform 0.3s ease-in-out;
-  }
-  &__btn {
-    transform: translateY(-100%);
-    display: flex;
-    align-items: center;
-    padding: 0.5rem;
-    justify-content: space-between;
-    width: 100%;
-    opacity: 0;
-    transition: opacity 0.2s ease, transform 0.4s ease;
-  }
-}
-
-.c-tasklist {
-  margin: 1rem auto;
-  text-align: center;
-  &__title {
-    font-size: 2.5rem;
-  }
-  &__container {
-    margin-right: 1rem;
-    display: flex;
-    flex-direction: column;
-  }
 }
 
 .c-todo-form,

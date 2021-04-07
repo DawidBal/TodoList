@@ -1,0 +1,43 @@
+@use 'mixins';
+
+body {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  color: white;
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+}
+
+.l-flexColumn {
+  @include mixins.flexColumn;
+}
+
+.hidden {
+  display: none;
+}
+
+.btn {
+  padding: 0.5rem;
+  color: var(--white);
+  text-align: left;
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  border-radius: 5px;
+  transition: background 0.4s ease;
+
+  &:hover {
+    background: var(--btn-hover);
+  }
+}
+
+.svg-icon {
+  fill: var(--white);
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  &:hover {
+    opacity: 1;
+  }
+}
