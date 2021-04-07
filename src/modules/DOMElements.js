@@ -6,11 +6,12 @@ import { startOfToday, startOfTomorrow } from 'date-fns'
 // TODO: Divide this module into two modules - Task DOM module, and Projects DOM module.
 const DOM = (() => {
   const taskForm = document.querySelector('.js-todo-from');
-  const projectForm = document.querySelector('.js-project-from');
   const taskList = document.querySelector('.js-tasklist');
+  const projectForm = document.querySelector('.js-project-from');
   const projectList = document.querySelector('.js-project-list');
   const selectList = document.querySelector('.js-projects');
-  const projectsMenu = document.querySelector('.js-newProject');
+  const showProjFormBtn = document.querySelector('.js-showProjectForm');
+  const cancelProjFormBtn = document.querySelector('.js-cancelProjForm');
   const inboxBtn = document.querySelector('.js-inbox');
   const todayBtn = document.querySelector('.js-today');
   const tomorrowBtn = document.querySelector('.js-tomorrow');
@@ -74,6 +75,7 @@ const DOM = (() => {
   const generateProjectHTML = (projectName) => {
     const newProject = document.createElement('button');
     newProject.classList.add('c-projects__item');
+    newProject.classList.add('btn');
     newProject.textContent = projectName;
     return newProject;
   };
@@ -107,6 +109,16 @@ const DOM = (() => {
     showTasks(taskManager.getTasksByProject(projectName));
   };
 
+  const showProjectForm = () => {
+    projectForm.parentElement.style.display = 'block';
+    showProjFormBtn.style.display = 'none';
+  }
+
+  const removeProjectForm = () => {
+    projectForm.parentElement.style.display = 'none';
+    showProjFormBtn.style.display = 'flex';
+  }
+
   // Events
   const fireEvents = () => {
 
@@ -117,6 +129,8 @@ const DOM = (() => {
     // Project Events
     projectForm.addEventListener('submit', projectManager.addNewProject);
     projectList.addEventListener('click', switchActiveProject);
+    showProjFormBtn.addEventListener('click', showProjectForm);
+    cancelProjFormBtn.addEventListener('click', removeProjectForm);
 
     inboxBtn.addEventListener('click', switchActiveProject);
     todayBtn.addEventListener('click', showTimeTasks.bind(null, startOfToday()));
@@ -155,6 +169,7 @@ const DOM = (() => {
     init,
     setTaskFormOptions,
     setNewTaskOption,
+    removeProjectForm,
   };
 })();
 export default DOM;

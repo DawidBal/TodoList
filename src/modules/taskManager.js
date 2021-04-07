@@ -8,11 +8,11 @@ const taskManager = (() => {
 
   let visibleTasks = [];
 
-  const saveTasks = (taskArray) => {
+  const saveActiveTasks = (taskArray) => {
     visibleTasks = Array.from(taskArray);
   }
 
-  const getSavedTasks = () => visibleTasks;
+  const getActiveTasks = () => visibleTasks;
 
   const addItemToArray = (arr, item) => arr.push(item);
 
@@ -43,10 +43,10 @@ const taskManager = (() => {
     const taskIndex = event.target.parentNode.dataset.index;
     tasks.splice(taskIndex, 1);
     DOM.removeTaskElement(taskIndex);
-    DOM.showTasks(getSavedTasks());
+    DOM.showTasks(getActiveTasks());
   };
 
-  return { tasks, addNewTask, removeTask, getTasksByProject, saveTasks, getSavedTasks };
+  return { tasks, addNewTask, removeTask, getTasksByProject, saveActiveTasks, getActiveTasks };
 })();
 
 export default taskManager;

@@ -12,6 +12,7 @@ const projectManager = (() => {
     projects.push(projectName);
     DOM.showNewProject(projectName);
     DOM.setNewTaskOption(projectName);
+    DOM.removeProjectForm();
     e.target.reset()
   }
 
