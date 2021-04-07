@@ -1,13 +1,12 @@
 :root {
   /* Background */
-  --gradient-black: hsl(0, 0%, 0%);
-  --gradient-grey: hsl(0, 0%, 26%);
+  --bg: hsl(216, 18%, 16%);
+  --bg-aside: hsl(217, 10%, 25%);
+
+  /* Hover */
+  --btn-hover: hsl(217, 10%, 18%);
+
+  /* Font */
   --white: hsl(0, 100%, 100%);
   --main: hsl(216, 76%, 31%);
 }
-
-$main-gradient: linear-gradient(
-  to right,
-  var(--gradient-grey) 0%,
-  var(--gradient-black) 100%
-);

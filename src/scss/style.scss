@@ -1,11 +1,32 @@
 @use 'variables';
+@use 'mixins';
 
 body {
   display: grid;
   grid-template-rows: auto 1fr;
   color: white;
   font-family: 'Cairo', sans-serif;
-  background-image: variables.$main-gradient;
+  background: var(--bg);
+}
+
+.l-flexColumn {
+  @include mixins.flexColumn;
+}
+
+.hidden {
+  display: none;
+}
+
+.btn {
+  font-size: 1.2rem;
+  color: var(--white);
+  border: none;
+  background: none;
+  border-radius: 5px;
+  transition: background 0.4s ease;
+  &:hover {
+    background: var(--btn-hover);
+  }
 }
 
 .c-header {
@@ -20,31 +41,67 @@ body {
 }
 .c-main {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1rem;
+  grid-template-columns: 15% 1fr;
 }
+
 .c-projects {
-  padding: 1rem 0 1rem 1rem;
+  padding: 1rem;
+  background: var(--bg-aside);
+
   &__nav {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+    flex: 1;
+    &:hover .c-show-form__btn {
+      transform: translateY(0);
+      opacity: 0.3;
+      &:hover {
+        opacity: 1;
+        .c-show-form__icon {
+          transform: rotate(90deg);
+        }
+      }
+    }
   }
+
   &__title {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    margin: 0 0.5rem;
   }
+
+  &__item {
+    width: 100%;
+  }
+}
+
+.c-menu {
+  &__item {
+    padding: 0.5rem;
+    text-align: left;
+  }
+}
+
+.c-show-form {
   &__icon {
     fill: var(--white);
     transition: transform 0.3s ease-in-out;
-    &:hover {
-      transform: rotate(90deg);
-    }
+  }
+  &__btn {
+    transform: translateY(-100%);
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    justify-content: space-between;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.4s ease;
   }
 }
 
 .c-tasklist {
   margin: 1rem auto;
   text-align: center;
+  &__title {
+    font-size: 2.5rem;
+  }
   &__container {
     margin-right: 1rem;
     display: flex;
@@ -53,19 +110,10 @@ body {
 }
 
 .c-todo-form,
-.c-project-form {
-  // display: none;
-  position: absolute;
-  left: 50%;
-  right: 50%;
-  top: 50%;
-  bottom: 50%;
+.c-projects-form {
+  display: none;
 }
 
-.c-project-form {
-  // display: none;
-  top: 35%;
-}
 .priority-1 {
   background: rgba(255, 0, 0, 0.5);
 }
