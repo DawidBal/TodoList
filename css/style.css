@@ -1,7 +1,10 @@
 :root {
   /* Background */
-  --gradient-black: hsl(0, 0%, 0%);
-  --gradient-grey: hsl(0, 0%, 26%);
+  --bg: hsl(216, 18%, 16%);
+  --bg-aside: hsl(217, 10%, 25%);
+  /* Hover */
+  --btn-hover: hsl(217, 10%, 18%);
+  /* Font */
   --white: hsl(0, 100%, 100%);
   --main: hsl(216, 76%, 31%);
 }
@@ -11,7 +14,28 @@ body {
   grid-template-rows: auto 1fr;
   color: white;
   font-family: "Cairo", sans-serif;
-  background-image: linear-gradient(to right, var(--gradient-grey) 0%, var(--gradient-black) 100%);
+  background: var(--bg);
+}
+
+.l-flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none;
+}
+
+.btn {
+  font-size: 1.2rem;
+  color: var(--white);
+  border: none;
+  background: none;
+  border-radius: 5px;
+  transition: background 0.4s ease;
+}
+.btn:hover {
+  background: var(--btn-hover);
 }
 
 .c-header {
@@ -27,32 +51,60 @@ body {
 
 .c-main {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1rem;
+  grid-template-columns: 15% 1fr;
 }
 
 .c-projects {
-  padding: 1rem 0 1rem 1rem;
+  padding: 1rem;
+  background: var(--bg-aside);
 }
 .c-projects__nav {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
+  flex: 1;
+}
+.c-projects__nav:hover .c-show-form__btn {
+  transform: translateY(0);
+  opacity: 0.3;
+}
+.c-projects__nav:hover .c-show-form__btn:hover {
+  opacity: 1;
+}
+.c-projects__nav:hover .c-show-form__btn:hover .c-show-form__icon {
+  transform: rotate(90deg);
 }
 .c-projects__title {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  margin: 0 0.5rem;
 }
-.c-projects__icon {
+.c-projects__item {
+  width: 100%;
+}
+
+.c-menu__item {
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.c-show-form__icon {
   fill: var(--white);
   transition: transform 0.3s ease-in-out;
 }
-.c-projects__icon:hover {
-  transform: rotate(90deg);
+.c-show-form__btn {
+  transform: translateY(-100%);
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  justify-content: space-between;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.4s ease;
 }
 
 .c-tasklist {
   margin: 1rem auto;
   text-align: center;
+}
+.c-tasklist__title {
+  font-size: 2.5rem;
 }
 .c-tasklist__container {
   margin-right: 1rem;
@@ -61,16 +113,8 @@ body {
 }
 
 .c-todo-form,
-.c-project-form {
-  position: absolute;
-  left: 50%;
-  right: 50%;
-  top: 50%;
-  bottom: 50%;
-}
-
-.c-project-form {
-  top: 35%;
+.c-projects-form {
+  display: none;
 }
 
 .priority-1 {
