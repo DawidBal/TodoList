@@ -13,13 +13,13 @@
 </head>
 <body>
     <header class="c-header">
-        <svg class="c-header__logo" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+        <svg class="c-header__logo svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M19 22h-19v-19h19v2h-1v-1h-17v17h17v-9.502h1v10.502zm5-19.315l-14.966 15.872-5.558-6.557.762-.648 4.833 5.707 14.201-15.059.728.685z"/>
         </svg>
         <h1 class="c-header__title">Get it done!</h1>
     </header>
     <main class="c-main">
-        <aside class="c-projects l-flexColumn js-newProject">
+        <aside class="c-projects l-flexColumn">
             <nav class="c-menu l-flexColumn">
                 <button class="c-menu__item btn js-inbox">Inbox</button>
                 <button class="c-menu__item btn js-today">Today</button>
@@ -29,12 +29,22 @@
                 <div class="c-projects__header">
                     <h2 class="c-projects__title">Projects</h2>
                 </div>
-                <div class="c-projects__list js-project-list"></div>
+                <div class="c-projects__list l-flexColumn js-project-list"></div>
                 <div class="c-show-form">
-                    <button class="c-show-form__btn btn js-showProjectForm">
-                        Add Project
-                        <svg class="c-show-form__icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-                    </button>
+                    <button class="c-show-form__btn btn js-showProjectForm">Add Project<svg class="c-show-form__icon svg-icon" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 11v-11h1v11h11v1h-11v11h-1v-11h-11v-1h11z"/></svg></button>
+                </div>
+                <div class="c-projects-form">
+                    <form class="c-form c-form--project js-project-from" name="todoForm">
+                        <label for="name">Project name</label>
+                        <input class="c-form__name" type="text" id="name" name="name" required>
+                        <div class="c-for__ui">
+                            <label>
+                                <input class="hidden" type="submit" value="">
+                                <svg class="svg-icon svg-icon--ui" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 4.685l-16.327 17.315-7.673-9.054.761-.648 6.95 8.203 15.561-16.501.728.685z"/></svg>
+                            </label>
+                            <svg class="svg-icon svg-icon--ui js-cancelProjForm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ><path d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z"/></svg>
+                        </div>
+                    </form>
                 </div>
             </div>
         </aside>
@@ -60,16 +70,6 @@
             </select>
             <select class="c-form__project js-projects" id="project" name="project"></select>
             <input type="submit" value="Add task">
-        </form>
-    </div>
-    <div class="c-projects-form">
-        <form class="c-form js-project-from" name="todoForm">
-            <label for="name">Project name</label>
-            <input class="c-form__name" type="text" id="name" name="name" required>
-            <label>
-            <input class="hidden" type="submit" value="Add project">
-            <svg class="c-form__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-            </label>
         </form>
     </div>
 </body>
