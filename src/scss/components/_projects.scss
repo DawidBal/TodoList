@@ -5,21 +5,6 @@
   &__nav {
     flex: 1;
     gap: 0.5rem;
-    &:hover .c-show-form__btn {
-      transform: translateY(0);
-      opacity: 0.3;
-
-      &:focus {
-        opacity: 1;
-      }
-
-      &:hover {
-        opacity: 1;
-        .c-show-form__icon {
-          transform: rotate(90deg);
-        }
-      }
-    }
   }
 
   &__title {
@@ -30,31 +15,67 @@
   &__item {
     width: 100%;
     animation: fadeIn 0.2s ease;
+    transition: color 0.2s ease;
+    &:hover {
+      color: var(--main);
+    }
   }
 }
 
-.c-show-form {
-  &__icon {
-    transition: transform 0.3s ease-in-out;
-  }
-  &__btn {
-    transform: translateY(-100%);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    opacity: 0;
-    transition: opacity 0.2s ease, transform 0.4s ease;
+@media only screen and (max-width: 599px) {
+  .c-show-form__btn {
+    opacity: 1;
   }
 }
-.c-form {
-  &--project {
-    display: flex;
-    align-items: center;
+
+@media only screen and (min-width: 600px) {
+  .c-projects {
+    min-width: 15rem;
+
+    .c-show-form__btn {
+      opacity: 0;
+    }
+    &__nav {
+      &:hover .c-show-form__btn {
+        transform: translateY(0);
+        opacity: 0.3;
+
+        &:focus {
+          opacity: 1;
+        }
+
+        &:hover {
+          opacity: 1;
+          .c-show-form__icon {
+            transform: rotate(90deg);
+          }
+        }
+      }
+    }
   }
-  &__ui {
-    margin-left: auto;
-    line-height: 0;
+
+  .c-show-form {
+    &__icon {
+      transition: transform 0.3s ease-in-out;
+    }
+    &__btn {
+      transform: translateY(-100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      transition: opacity 0.2s ease, transform 0.4s ease;
+    }
+  }
+  .c-form {
+    &--project {
+      display: flex;
+      align-items: center;
+    }
+    &__ui {
+      margin-left: auto;
+      line-height: 0;
+    }
   }
 }
 

@@ -6,7 +6,7 @@
   --btn-hover: hsl(217, 10%, 18%);
   /* Font */
   --white: hsl(0, 100%, 100%);
-  --main: hsl(216, 76%, 31%);
+  --main: hsl(163, 98%, 40%);
 }
 
 body {
@@ -39,6 +39,10 @@ body {
 .btn:hover {
   background: var(--btn-hover);
 }
+.btn--active {
+  background: var(--btn-hover);
+  color: var(--main);
+}
 
 .svg-icon {
   fill: var(--white);
@@ -59,19 +63,6 @@ body {
   flex: 1;
   gap: 0.5rem;
 }
-.c-projects__nav:hover .c-show-form__btn {
-  transform: translateY(0);
-  opacity: 0.3;
-}
-.c-projects__nav:hover .c-show-form__btn:focus {
-  opacity: 1;
-}
-.c-projects__nav:hover .c-show-form__btn:hover {
-  opacity: 1;
-}
-.c-projects__nav:hover .c-show-form__btn:hover .c-show-form__icon {
-  transform: rotate(90deg);
-}
 .c-projects__title {
   font-size: 2rem;
   margin: 0 0.5rem;
@@ -79,30 +70,59 @@ body {
 .c-projects__item {
   width: 100%;
   animation: fadeIn 0.2s ease;
+  transition: color 0.2s ease;
+}
+.c-projects__item:hover {
+  color: var(--main);
 }
 
-.c-show-form__icon {
-  transition: transform 0.3s ease-in-out;
+@media only screen and (max-width: 599px) {
+  .c-show-form__btn {
+    opacity: 1;
+  }
 }
-.c-show-form__btn {
-  transform: translateY(-100%);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  opacity: 0;
-  transition: opacity 0.2s ease, transform 0.4s ease;
-}
+@media only screen and (min-width: 600px) {
+  .c-projects {
+    min-width: 15rem;
+  }
+  .c-projects .c-show-form__btn {
+    opacity: 0;
+  }
+  .c-projects__nav:hover .c-show-form__btn {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+  .c-projects__nav:hover .c-show-form__btn:focus {
+    opacity: 1;
+  }
+  .c-projects__nav:hover .c-show-form__btn:hover {
+    opacity: 1;
+  }
+  .c-projects__nav:hover .c-show-form__btn:hover .c-show-form__icon {
+    transform: rotate(90deg);
+  }
 
-.c-form--project {
-  display: flex;
-  align-items: center;
-}
-.c-form__ui {
-  margin-left: auto;
-  line-height: 0;
-}
+  .c-show-form__icon {
+    transition: transform 0.3s ease-in-out;
+  }
+  .c-show-form__btn {
+    transform: translateY(-100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    transition: opacity 0.2s ease, transform 0.4s ease;
+  }
 
+  .c-form--project {
+    display: flex;
+    align-items: center;
+  }
+  .c-form__ui {
+    margin-left: auto;
+    line-height: 0;
+  }
+}
 @keyframes fadeIn {
   from {
     opacity: 0;
