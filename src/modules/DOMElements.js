@@ -100,6 +100,21 @@ const DOM = (() => {
     );
   };
 
+  const addClassList = (event, className) => {
+    event.target.classList.add(className);
+  }
+
+  // Remove given class on every element that contain this class
+  const removeClassList = (className) => {
+    const allElements = document.querySelectorAll(`.${className}`);
+    allElements.forEach(element => element.classList.remove(className));
+  }
+
+  const classHandler = (event, className) => {
+    removeClassList(className);
+    addClassList(event, className);
+  }
+
   const switchActiveProject = (e) => {
     if (!e.target.matches('button')) return;
     const projectName = e.target.textContent;
