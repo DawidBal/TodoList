@@ -7,6 +7,7 @@
   /* Font */
   --white: hsl(0, 100%, 100%);
   --main: hsl(163, 98%, 40%);
+  --secondary: hsla(2, 79%, 54%, 0.871);
 }
 
 body {
@@ -43,16 +44,29 @@ body {
   background: var(--btn-hover);
   color: var(--main);
 }
+.btn--form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+.btn--form:hover {
+  opacity: 1;
+  background: var(--bg-aside);
+}
+.btn--form:hover .svg-icon--green {
+  fill: var(--main);
+}
+.btn--form:hover .svg-icon--red {
+  fill: var(--secondary);
+}
 
 .svg-icon {
   fill: var(--white);
   width: 20px;
   height: 20px;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
-}
-.svg-icon:hover {
-  opacity: 1;
+  transition: fill 0.3s ease;
 }
 
 .c-projects {
@@ -69,11 +83,15 @@ body {
 }
 .c-projects__item {
   width: 100%;
-  animation: fadeIn 0.2s ease;
+  animation: fadeIn-left 0.2s ease;
   transition: color 0.2s ease;
 }
 .c-projects__item:hover {
   color: var(--main);
+}
+.c-projects__list {
+  max-height: 85%;
+  overflow-y: auto;
 }
 
 @media only screen and (max-width: 599px) {
@@ -84,9 +102,7 @@ body {
 @media only screen and (min-width: 600px) {
   .c-projects {
     min-width: 15rem;
-  }
-  .c-projects .c-show-form__btn {
-    opacity: 0;
+    min-height: 100%;
   }
   .c-projects__nav:hover .c-show-form__btn {
     transform: translateY(0);
@@ -101,29 +117,45 @@ body {
   .c-projects__nav:hover .c-show-form__btn:hover .c-show-form__icon {
     transform: rotate(90deg);
   }
-
-  .c-show-form__icon {
-    transition: transform 0.3s ease-in-out;
-  }
-  .c-show-form__btn {
-    transform: translateY(-100%);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    transition: opacity 0.2s ease, transform 0.4s ease;
-  }
-
-  .c-form--project {
-    display: flex;
-    align-items: center;
-  }
-  .c-form__ui {
-    margin-left: auto;
-    line-height: 0;
+  .c-projects .c-show-form__btn {
+    opacity: 0;
   }
 }
-@keyframes fadeIn {
+.c-show-form__icon {
+  transition: transform 0.3s ease-in-out;
+}
+.c-show-form__btn {
+  transform: translateY(-100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  transition: opacity 0.2s ease, transform 0.4s ease;
+}
+
+.c-form {
+  animation: fadeIn 0.3s ease;
+}
+.c-form--project {
+  gap: 0.5rem;
+  background: var(--btn-hover);
+  padding: 1rem;
+  border-radius: 5px;
+}
+.c-form__text {
+  margin-top: 0.5rem;
+  border: none;
+  border-bottom: 1px solid var(--main);
+  background: none;
+  color: var(--white);
+}
+.c-form__ui {
+  display: flex;
+  justify-content: space-evenly;
+  line-height: 0;
+}
+
+@keyframes fadeIn-left {
   from {
     opacity: 0;
     transform: translateX(-100%);
@@ -131,6 +163,14 @@ body {
   to {
     opacity: 1;
     transform: translateX(0%);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 .c-tasklist {
