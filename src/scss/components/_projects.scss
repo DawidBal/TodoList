@@ -16,13 +16,26 @@
     width: 100%;
     animation: fadeIn-left 0.2s ease;
     transition: color 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     &:hover {
       color: var(--main);
+      & .icon--project {
+        opacity: 0.4;
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
   }
   &__list {
     max-height: 85%;
     overflow-y: auto;
+  }
+  &__icons {
+    display: flex;
+    gap: 0.5rem;
   }
 }
 
@@ -95,6 +108,10 @@
   }
 }
 
+.fade-out {
+  animation: fadeOut-left 300ms ease;
+}
+
 @keyframes fadeIn-left {
   from {
     opacity: 0;
@@ -103,6 +120,18 @@
   to {
     opacity: 1;
     transform: translateX(0%);
+  }
+}
+
+@keyframes fadeOut-left {
+  from {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
   }
 }
 

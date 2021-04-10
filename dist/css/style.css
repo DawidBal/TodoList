@@ -44,6 +44,9 @@ body {
   background: var(--btn-hover);
   color: var(--main);
 }
+.btn--project {
+  padding: 0;
+}
 .btn--form {
   display: flex;
   align-items: center;
@@ -55,18 +58,22 @@ body {
   opacity: 1;
   background: var(--bg-aside);
 }
-.btn--form:hover .svg-icon--green {
+.btn--form:hover .icon--green {
   fill: var(--main);
 }
-.btn--form:hover .svg-icon--red {
+.btn--form:hover .icon--red {
   fill: var(--secondary);
 }
 
-.svg-icon {
+.icon {
   fill: var(--white);
   width: 20px;
   height: 20px;
   transition: fill 0.3s ease;
+}
+.icon--project {
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .c-projects {
@@ -85,13 +92,26 @@ body {
   width: 100%;
   animation: fadeIn-left 0.2s ease;
   transition: color 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .c-projects__item:hover {
   color: var(--main);
 }
+.c-projects__item:hover .icon--project {
+  opacity: 0.4;
+}
+.c-projects__item:hover .icon--project:hover {
+  opacity: 1;
+}
 .c-projects__list {
   max-height: 85%;
   overflow-y: auto;
+}
+.c-projects__icons {
+  display: flex;
+  gap: 0.5rem;
 }
 
 @media only screen and (max-width: 599px) {
@@ -155,6 +175,10 @@ body {
   line-height: 0;
 }
 
+.fade-out {
+  animation: fadeOut-left 300ms ease;
+}
+
 @keyframes fadeIn-left {
   from {
     opacity: 0;
@@ -163,6 +187,16 @@ body {
   to {
     opacity: 1;
     transform: translateX(0%);
+  }
+}
+@keyframes fadeOut-left {
+  from {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
   }
 }
 @keyframes fadeIn {
@@ -179,6 +213,8 @@ body {
 }
 .c-tasklist__title {
   font-size: 2.5rem;
+  color: var(--main);
+  animation: fadeIn 0.3s ease;
 }
 .c-tasklist__container {
   margin-right: 1rem;

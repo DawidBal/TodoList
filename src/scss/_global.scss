@@ -33,6 +33,9 @@ body {
     background: var(--btn-hover);
     color: var(--main);
   }
+  &--project {
+    padding: 0;
+  }
   &--form {
     display: flex;
     align-items: center;
@@ -42,19 +45,23 @@ body {
     &:hover {
       opacity: 1;
       background: var(--bg-aside);
-      & .svg-icon--green {
+      & .icon--green {
         fill: var(--main);
       }
-      & .svg-icon--red {
+      & .icon--red {
         fill: var(--secondary);
       }
     }
   }
 }
 
-.svg-icon {
+.icon {
   fill: var(--white);
   width: 20px;
   height: 20px;
   transition: fill 0.3s ease;
+  &--project {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 }
