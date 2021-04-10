@@ -25,6 +25,10 @@ const taskManager = (() => {
     return tasks.filter(task => task.project === projectName);
   }
 
+  const changeTasksProject = (tasks, projectName) => {
+    tasks.forEach(task => task.project = projectName);
+  }
+
   // TODO: Refactor function - Split into smaller funcitons, think about where to put DOM method.
   const addNewTask = (e) => {
     e.preventDefault();
@@ -46,7 +50,7 @@ const taskManager = (() => {
     DOM.showTasks(getActiveTasks());
   };
 
-  return { tasks, addNewTask, removeTask, getTasksByProject, saveActiveTasks, getActiveTasks };
+  return { tasks, addNewTask, removeTask, getTasksByProject, saveActiveTasks, getActiveTasks, changeTasksProject };
 })();
 
 export default taskManager;

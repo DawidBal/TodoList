@@ -16,16 +16,27 @@ const projectManager = (() => {
     e.target.reset()
   }
 
+  const isAlreadyCreated = (projectName) => {
+    return projects.includes(projectName.trim());
+  }
+
+  // TODO: Add error handling
+  const removeProject = (projectName) => {
+    projects.splice(projects.indexOf(projectName), 1);
+  }
+
+  const getAllProjects = () => projects;
+
   const getActiveProject = () => activeProject;
 
   const setActiveProject = (projectName) => {
-    if(projects.includes(projectName)) {
+    if(isAlreadyCreated(projectName)) {
       activeProject = projectName;
     } else {
       throw new Error("Missing project!");
     }
   }
-  return {projects, getActiveProject, setActiveProject, addNewProject}
+  return {getActiveProject, setActiveProject, addNewProject, getAllProjects, removeProject}
 })();
 
 export default projectManager;
