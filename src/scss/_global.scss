@@ -56,9 +56,9 @@ body {
 }
 
 .icon {
-  fill: var(--white);
   width: 20px;
   height: 20px;
+  fill: var(--white);
   transition: fill 0.3s ease;
   &--project {
     opacity: 0;
