@@ -12,6 +12,12 @@ const projectManager = (() => {
   const addNewProject = (e) => {
     e.preventDefault();
     const projectName = e.target.querySelector('input').value;
+
+    if(isAlreadyCreated(projectName)) {
+      DOM.printMessage(`Project ${projectName} is already created`, DOM.types.Error);
+      return;
+    }
+
     projects.push(projectName);
     DOM.showNewProject(projectName);
     DOM.setNewTaskOption(projectName);

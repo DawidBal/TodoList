@@ -1,9 +1,10 @@
 @use 'mixins';
+@use 'animations';
 
 body {
   display: grid;
   grid-template-rows: auto 1fr;
-  color: white;
+  color: var(--white);
   font-family: 'Cairo', sans-serif;
   background: var(--bg);
 }
@@ -35,6 +36,8 @@ body {
   }
   &--project {
     padding: 0;
+    display: flex;
+    align-items: center;
   }
   &--form {
     display: flex;
@@ -63,5 +66,39 @@ body {
   &--project {
     opacity: 0;
     transition: opacity 0.3s ease;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .printMsg {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 2rem 4rem;
+    margin: 2rem;
+    background: var(--printMsgColor);
+    font-size: 1.1rem;
+    color: var(--printTextColor, var(--bg));
+    font-weight: bold;
+    border-radius: 1rem;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.4s ease;
+    transform: translateY(-200%);
+    &.fadeIn-up {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      margin-left: -2rem;
+      border-width: 2rem;
+      border-style: solid;
+      border-color: var(--printMsgColor) transparent transparent transparent;
+      transform: rotate(180deg);
+    }
   }
 }

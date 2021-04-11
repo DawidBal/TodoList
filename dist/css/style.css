@@ -7,13 +7,41 @@
   /* Font */
   --white: hsl(0, 100%, 100%);
   --main: hsl(163, 98%, 40%);
-  --secondary: hsla(2, 79%, 54%, 0.871);
+  --secondary: hsl(2, 68%, 45%);
 }
 
+@keyframes fadeIn-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+@keyframes fadeOut-left {
+  from {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 body {
   display: grid;
   grid-template-rows: auto 1fr;
-  color: white;
+  color: var(--white);
   font-family: "Cairo", sans-serif;
   background: var(--bg);
 }
@@ -46,6 +74,8 @@ body {
 }
 .btn--project {
   padding: 0;
+  display: flex;
+  align-items: center;
 }
 .btn--form {
   display: flex;
@@ -66,9 +96,9 @@ body {
 }
 
 .icon {
-  fill: var(--white);
   width: 20px;
   height: 20px;
+  fill: var(--white);
   transition: fill 0.3s ease;
 }
 .icon--project {
@@ -76,6 +106,38 @@ body {
   transition: opacity 0.3s ease;
 }
 
+@media only screen and (min-width: 600px) {
+  .printMsg {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 2rem 4rem;
+    margin: 2rem;
+    background: var(--printMsgColor);
+    font-size: 1.1rem;
+    color: var(--printTextColor, var(--bg));
+    font-weight: bold;
+    border-radius: 1rem;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.4s ease;
+    transform: translateY(-200%);
+  }
+  .printMsg.fadeIn-up {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .printMsg::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    margin-left: -2rem;
+    border-width: 2rem;
+    border-style: solid;
+    border-color: var(--printMsgColor) transparent transparent transparent;
+    transform: rotate(180deg);
+  }
+}
 .c-projects {
   padding: 1rem;
   background: var(--bg-aside);
@@ -89,12 +151,12 @@ body {
   margin: 0 0.5rem;
 }
 .c-projects__item {
-  width: 100%;
-  animation: fadeIn-left 0.2s ease;
-  transition: color 0.2s ease;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  animation: fadeIn-left 0.2s ease;
+  transition: color 0.2s ease;
 }
 .c-projects__item:hover {
   color: var(--main);
@@ -122,7 +184,7 @@ body {
 @media only screen and (min-width: 600px) {
   .c-projects {
     min-width: 15rem;
-    min-height: 100%;
+    min-height: 80vh;
   }
   .c-projects__nav:hover .c-show-form__btn {
     transform: translateY(0);
@@ -145,11 +207,11 @@ body {
   transition: transform 0.3s ease-in-out;
 }
 .c-show-form__btn {
-  transform: translateY(-100%);
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  transform: translateY(-100%);
   transition: opacity 0.2s ease, transform 0.4s ease;
 }
 
@@ -158,8 +220,8 @@ body {
 }
 .c-form--project {
   gap: 0.5rem;
-  background: var(--btn-hover);
   padding: 1rem;
+  background: var(--btn-hover);
   border-radius: 5px;
 }
 .c-form__text {
@@ -176,37 +238,9 @@ body {
 }
 
 .fade-out {
-  animation: fadeOut-left 300ms ease;
+  animation: fadeOut-left 0.2s ease;
 }
 
-@keyframes fadeIn-left {
-  from {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0%);
-  }
-}
-@keyframes fadeOut-left {
-  from {
-    opacity: 1;
-    transform: translateX(0%);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 .c-tasklist {
   margin: 1rem auto;
   text-align: center;
@@ -217,9 +251,9 @@ body {
   animation: fadeIn 0.3s ease;
 }
 .c-tasklist__container {
-  margin-right: 1rem;
   display: flex;
   flex-direction: column;
+  margin-right: 1rem;
 }
 
 .c-header {
