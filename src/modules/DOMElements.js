@@ -16,6 +16,8 @@ const DOM = (() => {
   const todayBtn = document.querySelector('.js-today');
   const tomorrowBtn = document.querySelector('.js-tomorrow');
 
+  const defaultProject = projectManager.getDefaultProject();
+
   // Tasks
   const generateTaskHTML = (task, index) => {
     const newTask = document.createElement('div');
@@ -78,9 +80,8 @@ const DOM = (() => {
     newProject.classList.add('c-projects__item');
     newProject.classList.add('btn');
     newProject.setAttribute('data-action', 'change');
-    newProject.innerHTML = `
-    ${projectName}
-    <div class="c-projects__icons">
+    newProject.innerHTML = 
+    `${projectName}<div class="c-projects__icons">
       <button class="btn btn--project" data-action="edit">
         <svg class="icon icon--project" data-action="edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z"/></svg>
       </button>
@@ -97,7 +98,7 @@ const DOM = (() => {
     clearInnerHTML(projectList);
     const projectNames = projectManager.getAllProjects();
     projectNames.forEach((projectName) => {
-      if(projectName === 'Inbox') return
+      if(projectName === defaultProject) return
       projectList.append(generateProjectHTML(projectName));
     });
   };
@@ -111,49 +112,49 @@ const DOM = (() => {
     );
   };
 
-  const addClassList = (event, className) => {
-    event.target.classList.add(className);
-  }
+  const addClassList = (event, className) => event.target.classList.add(className);
 
-  // Remove given class on every element that contain this class
+  /**
+   * 
+   * @param {string} className 
+   * Remove given class on every element that contain this class
+   */
   const removeClassList = (className) => {
     const allElements = document.querySelectorAll(`.${className}`);
     allElements.forEach(element => element.classList.remove(className));
-  }
+  };
 
   const classHandler = (event, className) => {
     removeClassList(className);
     addClassList(event, className);
-  }
+  };
   
   const eventHandler = (event) => {
     const action = event.target.dataset.action;
     switch(action) {
-      
       case 'change': switchActiveProject(event);
         break;
       case 'edit': 
         break;
-      case 'remove':
-        // TODO: Refactor case
-        const parentElement = event.target.closest('.c-projects__item');
-        const projectName = parentElement.textContent.trim();
-        const tasksInProject = taskManager.getTasksByProject(projectName);
-        projectManager.removeProject(projectName);
-        updateListTitle('Inbox');
-        projectManager.setActiveProject('Inbox');
-        taskManager.changeTasksProject(tasksInProject, 'Inbox');
-        removeProject(parentElement);
+      case 'remove': removeProject(event);
         break;
     }
-  }
+  };
 
-  const removeProject = (element) => {
-    element.classList.add('fade-out');
-    setTimeout(() => {
-      element.classList.remove('fade-out');
-      element.parentElement.removeChild(element);
-    }, 175);
+ 
+
+  const removeProject = (event) => {
+    const parentElement = event.target.closest('.c-projects__item');
+    const projectName = parentElement.textContent.trim();
+    const tasksInProject = taskManager.getTasksByProject(projectName);
+    const delayTime = 175;
+
+    projectManager.removeProject(projectName);
+    updateListTitle(defaultProject);
+    projectManager.setActiveProject(defaultProject);
+    taskManager.changeTasksProject(tasksInProject, defaultProject);
+    toggleAnimation(parentElement, delayTime, 'fade-out');
+    removeElementDelay(parentElement, delayTime);
   }
 
   const switchActiveProject = (e) => {
@@ -185,6 +186,7 @@ const DOM = (() => {
 
     // Project Events
     projectForm.addEventListener('submit', projectManager.addNewProject);
+    // Perform action when clicked on element that contains data-action attribute
     projectList.addEventListener('click', eventHandler);
     showProjFormBtn.addEventListener('click', showProjectForm);
     cancelProjFormBtn.addEventListener('click', removeProjectForm);
@@ -195,6 +197,19 @@ const DOM = (() => {
   };
 
   // Utilities
+
+  const removeElement = (element) => element.parentElement.removeChild(element);
+
+  const removeElementDelay = (element, delay) => {
+    setTimeout(() => removeElement(element), delay);
+  };
+
+  const toggleAnimation = (element, delay = 1000, name) => {
+    element.classList.add(name);
+    setTimeout(() => {
+      element.classList.remove(name);
+    }, delay);
+  };
 
   const clearInnerHTML = (element) => element.innerHTML = '';
 

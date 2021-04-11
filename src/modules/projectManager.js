@@ -5,6 +5,9 @@ const projectManager = (() => {
   const projects = ['Inbox'];
 
   let activeProject = 'Inbox';
+  const defaultProject = 'Inbox';
+
+  const getDefaultProject = () => defaultProject;
 
   const addNewProject = (e) => {
     e.preventDefault();
@@ -25,6 +28,10 @@ const projectManager = (() => {
     projects.splice(projects.indexOf(projectName), 1);
   }
 
+  const renameProject = (projectName, newProjectName) => {
+    projects[projects.indexOf(projectName)] = newProjectName;
+  }
+
   const getAllProjects = () => projects;
 
   const getActiveProject = () => activeProject;
@@ -36,7 +43,7 @@ const projectManager = (() => {
       throw new Error("Missing project!");
     }
   }
-  return {getActiveProject, setActiveProject, addNewProject, getAllProjects, removeProject}
+  return {getActiveProject, setActiveProject, addNewProject, getAllProjects, removeProject, getDefaultProject, renameProject}
 })();
 
 export default projectManager;
