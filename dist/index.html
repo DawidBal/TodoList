@@ -34,7 +34,7 @@
                     <button class="c-show-form__btn btn js-showProjectForm">Add Project<svg class="c-show-form__icon icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 11v-11h1v11h11v1h-11v11h-1v-11h-11v-1h11z"/></svg></button>
                 </div>
                 <div class="c-projects-form">
-                    <form class="c-form c-form--project l-flexColumn js-project-from" name="todoForm">
+                    <form class="c-form c-form--project l-flexColumn js-project-from">
                         <div class="l-flexColumn">
                             <label class="label" for="name">Project name:</label>
                             <input class="c-form__text" type="text" id="name" name="name" required>
@@ -50,28 +50,48 @@
 
         <section class="c-tasklist l-flexColumn">
             <h2 class="c-tasklist__title l-flexColumn js-tasklist__title">Inbox</h2>
-        <div class="c-tasklist__container js-tasklist"></div>
+            <div class="c-tasklist__container js-tasklist"></div>
+            <div class="c-show-form">
+                    <button class="c-show-form__btn c-show-form__btn--task btn js-showTaskForm">Add task<svg class="c-show-form__icon icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 11v-11h1v11h11v1h-11v11h-1v-11h-11v-1h11z"/></svg></button>
+            </div>
+            <div class="c-todo-form">
+                <form class="c-form c-form--tasks l-flexColumn js-todo-from">
+                <div class="l-flexColumn">
+                    <label for="title">Task name</label>
+                    <input class="c-form__text" type="text" id="title" name="title" placeholder="Task name" required>
+                </div>
+                <div class="l-flexColumn">
+                    <label for="notes">Notes</label>
+                    <textarea class="c-form__text c-form__text--area" name="notes" id="notes" rows="3" placeholder="Task notes"></textarea>
+                </div>
+                <div class="c-form__pickers">
+                    <div class="l-flexColumn">
+                        <label for="endDate">End Date</label>
+                        <input class="js-date" type="date" name="endDate" id="endDate">
+                    </div>
+                    <div class="l-flexColumn">
+                        <label for="priority">Priority</label>
+                        <select class="c-form__priority" id="priority" name="priority">
+                            <option selected value="3">Low</option>
+                            <option value="2">Medium</option>
+                            <option value="1">High</option>
+                        </select>
+                    </div>
+                    <div class="l-flexColumn">
+                        <label for="project">Project</label>
+                        <select class="c-form__project js-projects" id="project" name="project"></select>
+                    </div>
+                </div>
+                    <div class="c-form__ui">
+                            <button class="btn btn--form" type="submit">Add<svg class="icon icon--green" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 4.685l-16.327 17.315-7.673-9.054.761-.648 6.95 8.203 15.561-16.501.728.685z"/></svg></button>
+                            <button class="btn btn--form js-cancelTaskForm" type="reset">Cancel<svg class="icon icon--red" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ><path d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z"/></svg></button>
+                    </div>
+                </form>
+            </div>
         </section>
     </main>
 
     <div class="printMsg js-printMsg"></div>
 
-    <div class="c-todo-form">
-        <form class="c-form js-todo-from" name="todoForm">
-            <label for="title">Task name</label>
-            <input class="c-form__text" type="text" id="title" name="title" required>
-            <label for="description">Task description</label>
-            <input class="c-form__text" type="text" id="description" name="description">
-            <label for="endTask">End Date</label>
-            <input class="js-date" type="date" name="endDate" id="endDate">
-            <select class="c-form__priority" id="priority" name="priority">
-                <option selected value="3">Low</option>
-                <option value="2">Medium</option>
-                <option value="1">High</option>
-            </select>
-            <select class="c-form__project js-projects" id="project" name="project"></select>
-            <input type="submit" value="Add task">
-        </form>
-    </div>
 </body>
 </html>

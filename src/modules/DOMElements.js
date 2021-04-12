@@ -7,6 +7,8 @@ import { startOfToday, startOfTomorrow } from 'date-fns'
 const DOM = (() => {
   const taskForm = document.querySelector('.js-todo-from');
   const taskList = document.querySelector('.js-tasklist');
+  const showTaskFormBtn = document.querySelector('.js-showTaskForm');
+  const cancelTaskFormBtn = document.querySelector('.js-cancelTaskForm');
   const projectForm = document.querySelector('.js-project-from');
   const projectList = document.querySelector('.js-project-list');
   const selectList = document.querySelector('.js-projects');
@@ -160,14 +162,21 @@ const DOM = (() => {
     showTasks(taskManager.getTasksByProject(projectName));
   };
 
-  const showProjectForm = () => {
-    projectForm.parentElement.style.display = 'block';
-    showProjFormBtn.style.display = 'none';
+
+  const showProjectForm = () => showForm(projectForm, showProjFormBtn);
+  const removeProjectForm = () => removeForm(projectForm, showProjFormBtn);
+
+  const showTaskForm = () => showForm(taskForm, showTaskFormBtn);
+  const removeTaskForm = () => removeForm(taskForm, showTaskFormBtn);
+  
+  const showForm = (form, toggler) => {
+    form.parentElement.style.display = 'block';
+    toggler.style.display = 'none';
   }
 
-  const removeProjectForm = () => {
-    projectForm.parentElement.style.display = 'none';
-    showProjFormBtn.style.display = 'flex';
+  const removeForm = (form, toggler) => {
+    form.parentElement.style.display = 'none';
+    toggler.style.display = 'flex';
   }
 
 
@@ -177,6 +186,8 @@ const DOM = (() => {
     // Task Events
     taskForm.addEventListener('submit', taskManager.addNewTask);
     taskList.addEventListener('click', taskManager.removeTask);
+    showTaskFormBtn.addEventListener('click', showTaskForm);
+    cancelTaskFormBtn.addEventListener('click', removeTaskForm);
 
     // Project Events
     projectForm.addEventListener('submit', projectManager.addNewProject);
