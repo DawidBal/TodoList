@@ -139,7 +139,7 @@ const DOM = (() => {
 
   const removeProject = (event) => {
     const parentElement = event.target.closest('.c-projects__item');
-    const projectName = parentElement.textContent.trim();
+    const projectName = parentElement.childNodes[0].nodeValue;
     const tasksInProject = taskManager.getTasksByProject(projectName);
     const delayTime = 175;
 
@@ -152,7 +152,7 @@ const DOM = (() => {
   }
 
   const switchActiveProject = (e) => {
-    const projectName = e.target.textContent;
+    const projectName = e.target.childNodes[0].nodeValue;
     classHandler(e, 'btn--active');
     projectManager.setActiveProject(projectName);
     updateListTitle(projectName);

@@ -26,7 +26,7 @@ const projectManager = (() => {
   }
 
   const isAlreadyCreated = (projectName) => {
-    return projects.includes(projectName.trim());
+    return projects.includes(projectName);
   }
 
   // TODO: Add error handling
