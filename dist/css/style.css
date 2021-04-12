@@ -20,7 +20,7 @@
     transform: translateX(0%);
   }
 }
-@keyframes fadeOut-left {
+@keyframes moveOut-left {
   from {
     opacity: 1;
     transform: translateX(0%);
@@ -36,6 +36,14 @@
   }
   to {
     opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 body {
@@ -83,6 +91,9 @@ body {
   gap: 0.5rem;
   opacity: 0.6;
   transition: opacity 0.3s ease;
+}
+.btn--form:focus {
+  opacity: 1;
 }
 .btn--form:hover {
   opacity: 1;
@@ -155,6 +166,51 @@ body {
   line-height: 0;
 }
 
+.checkbox {
+  display: grid;
+  grid-template-columns: min-content auto;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 1rem;
+  color: var(--white);
+}
+
+.checkbox__control {
+  display: inline-grid;
+  width: 1.3em;
+  height: 1.3em;
+  border-radius: 50%;
+  border: 0.1em solid var(--priorityColor);
+}
+.checkbox__control svg {
+  transition: transform 0.1s ease-in 25ms, opacity 0.1s ease-in 25ms;
+  transform: scale(0);
+  transform-origin: bottom left;
+  stroke: var(--priorityColor);
+}
+
+.checkbox__input {
+  display: grid;
+  grid-template-areas: "checkbox";
+  align-items: center;
+}
+.checkbox__input > * {
+  grid-area: checkbox;
+}
+.checkbox__input input {
+  opacity: 0;
+  width: 1em;
+  height: 1em;
+}
+.checkbox__input input:hover + .checkbox__control svg {
+  opacity: 0.6;
+  transform: scale(1);
+}
+.checkbox__input input:checked + .checkbox__control svg {
+  transform: scale(1);
+  opacity: 1;
+}
+
 .c-projects {
   padding: 1rem;
   background: var(--bg-aside);
@@ -201,6 +257,7 @@ body {
 @media only screen and (min-width: 600px) {
   .c-projects {
     flex: 1;
+    max-width: 40ch;
   }
   .c-projects__nav:hover .c-show-form__btn {
     transform: translateY(0);
@@ -238,14 +295,15 @@ body {
   border-radius: 5px;
 }
 
-.fade-out {
-  animation: fadeOut-left 0.2s ease;
+.moveOut-left {
+  animation: moveOut-left 0.2s ease;
 }
 
 .c-tasklist {
   text-align: center;
-  flex: 4;
-  margin: 0 8vw;
+  flex: 3;
+  margin: 0 auto;
+  max-width: 120ch;
 }
 .c-tasklist__title {
   font-size: 2.5rem;
@@ -255,7 +313,10 @@ body {
 .c-tasklist__container {
   display: flex;
   flex-direction: column;
-  margin-right: 1rem;
+  margin: 0.5rem 1rem;
+}
+.c-tasklist__item {
+  display: flex;
 }
 
 .c-show-form__btn--task {
@@ -283,7 +344,7 @@ body {
 }
 
 .c-form--tasks {
-  width: 55%;
+  max-width: 75%;
   margin: 0 auto;
   gap: 1rem;
 }
@@ -307,6 +368,10 @@ body {
   background-size: 100% 4ch;
 }
 
+.fadeOut {
+  animation: fadeOut 0.2s ease;
+}
+
 .c-header {
   display: flex;
   align-items: center;
@@ -326,18 +391,6 @@ body {
 .c-todo-form,
 .c-projects-form {
   display: none;
-}
-
-.priority-1 {
-  background: rgba(255, 0, 0, 0.5);
-}
-
-.priority-2 {
-  background: rgba(0, 102, 255, 0.5);
-}
-
-.priority-3 {
-  background: rgba(255, 136, 0, 0.5);
 }
 
 /*# sourceMappingURL=style.css.map */

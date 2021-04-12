@@ -43,8 +43,7 @@ const taskManager = (() => {
   };
 
   const removeTask = (event) => {
-    if (!event.target.matches('button')) return;
-    const taskIndex = event.target.parentNode.dataset.index;
+    const taskIndex = event.target.closest('.c-tasklist__item').dataset.index;
     tasks.splice(taskIndex, 1);
     DOM.removeTaskElement(taskIndex);
     DOM.showTasks(getActiveTasks());

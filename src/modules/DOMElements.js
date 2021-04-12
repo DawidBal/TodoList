@@ -5,6 +5,8 @@ import { startOfToday, startOfTomorrow } from 'date-fns'
 
 // TODO: Divide this module into two modules - Task DOM module, and Projects DOM module.
 const DOM = (() => {
+
+  // Utilities
   const taskForm = document.querySelector('.js-todo-from');
   const taskList = document.querySelector('.js-tasklist');
   const showTaskFormBtn = document.querySelector('.js-showTaskForm');
@@ -21,16 +23,89 @@ const DOM = (() => {
 
   const defaultProject = projectManager.getDefaultProject();
 
+  const types = {
+     Error: 'Error',
+     Success: 'Success',
+   };
+
+  const removeElement = (element) => element.parentElement.removeChild(element);
+
+  const removeElementDelay = (element, delay) => {
+    setTimeout(() => removeElement(element), delay);
+  };
+
+  const toggleAnimation = (delay = 1000, name) => {
+    let timer
+    return function(element) {
+      clearTimeout(timer);
+      element.classList.add(name);
+      timer = setTimeout(() => {
+        element.classList.remove(name);
+      }, delay);
+    }
+  };
+
+  const projectsRemoveAnim = toggleAnimation(175, 'moveOut-left');
+  const msgBoxAnim = toggleAnimation(1500, 'fadeIn-up');
+
+  const clearInnerHTML = (element) => element.innerHTML = '';
+
+  const setInputDateToday = () => {
+    const inputDate = document.querySelector('.js-date');
+    inputDate.setAttribute('value', format(new Date(), 'yyyy-MM-dd'));
+  };
+
+  const updateListTitle = (name) => {
+    const title = document.querySelector('.js-tasklist__title');
+    title.textContent = name;
+  };
+
+  const printMessage = (message, type) => {
+    type === types.Error ?
+      printMsg.style.cssText = '--printMsgColor: var(--secondary);--printTextColor: var(--white)' :
+      printMsg.style.cssText = '--printMsgColor: var(--main);--printTextColor: var(--bg)'
+    
+    printMsg.textContent = message;
+    msgBoxAnim(printMsg);
+  }
+
+  const applyPriorityColor = (priority) => {
+    switch(priority) {
+      case '1': return "var(--main)"
+      case '2': return "#ffa700"
+      case '3': return "#0585f7"
+    }
+  }
+
+  const init = () => {
+    showAllProjects();
+    setTaskFormOptions();
+    fireEvents();
+    setInputDateToday();
+  };
+
   // Tasks
   const generateTaskHTML = (task, index) => {
     const newTask = document.createElement('div');
     newTask.setAttribute('data-index', index);
+    newTask.classList.add(`c-tasklist__item`);
     newTask.classList.add(`priority-${task.priority}`);
-    newTask.innerHTML = `<h2>${task.title}</h2>
-            <label for="task-${index}"></label>
-            <input type="checkbox" data-index="${index}" id="task-${index}" 
-            ${task.completed === true ? `disabled` : ``}>
-            <button>X</button>`;
+    newTask.innerHTML = `
+            <label for="task-${index}" class="checkbox" style="--priorityColor: ${applyPriorityColor(task.priority)}">
+            <span class="checkbox__input">
+              <input type="checkbox" data-action="toggle" id="task-${index}" ${task.completed === true ? `disabled` : ``} />
+              <span class="checkbox__control">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path fill="none" stroke-width="3" d="M1.73 12.91l6.37 6.37L22.79 4.59" />
+                </svg>
+              </span>
+            </span>
+            <h2 class="radio__label">${task.title}</h2>
+            </label>
+            
+            <button class="btn btn--task" data-action="remove">
+              <svg class="icon icon--task" data-action="remove" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path data-action="remove" d="M9 3h6v-1.75c0-.066-.026-.13-.073-.177-.047-.047-.111-.073-.177-.073h-5.5c-.066 0-.13.026-.177.073-.047.047-.073.111-.073.177v1.75zm11 1h-16v18c0 .552.448 1 1 1h14c.552 0 1-.448 1-1v-18zm-10 3.5c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm5 0c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm8-4.5v1h-2v18c0 1.105-.895 2-2 2h-14c-1.105 0-2-.895-2-2v-18h-2v-1h7v-2c0-.552.448-1 1-1h6c.552 0 1 .448 1 1v2h7z"/></svg>
+            </button>`;
     return newTask;
   };
 
@@ -128,8 +203,9 @@ const DOM = (() => {
     removeClassList(className);
     addClassList(event, className);
   };
-  
-  const eventHandler = (event) => {
+
+  // TODO: Move function to projectManager
+  const projectEventHandler = (event) => {
     const action = event.target.dataset.action;
     switch(action) {
       case 'change': switchActiveProject(event);
@@ -139,6 +215,18 @@ const DOM = (() => {
     }
   };
 
+  // TODO: Move function to taskManager
+  const taskEventHandler = (event) => {
+    const action = event.target.dataset.action;
+    switch(action) {
+      case 'toggle': 
+        break;
+      case 'remove': taskManager.removeTask(event);
+        break;
+    }
+  };
+
+  // TODO: Move function to projectManager
   const removeProject = (event) => {
     const parentElement = event.target.closest('.c-projects__item');
     const projectName = parentElement.childNodes[0].nodeValue;
@@ -149,7 +237,7 @@ const DOM = (() => {
     updateListTitle(defaultProject);
     projectManager.setActiveProject(defaultProject);
     taskManager.changeTasksProject(tasksInProject, defaultProject);
-    toggleAnimation(parentElement, delayTime, 'fade-out');
+    projectsRemoveAnim(parentElement);
     removeElementDelay(parentElement, delayTime);
   }
 
@@ -185,14 +273,14 @@ const DOM = (() => {
 
     // Task Events
     taskForm.addEventListener('submit', taskManager.addNewTask);
-    taskList.addEventListener('click', taskManager.removeTask);
+    taskList.addEventListener('click', taskEventHandler);
     showTaskFormBtn.addEventListener('click', showTaskForm);
     cancelTaskFormBtn.addEventListener('click', removeTaskForm);
 
     // Project Events
     projectForm.addEventListener('submit', projectManager.addNewProject);
     // Perform action when clicked on element that contains data-action attribute
-    projectList.addEventListener('click', eventHandler);
+    projectList.addEventListener('click', projectEventHandler);
     showProjFormBtn.addEventListener('click', showProjectForm);
     cancelProjFormBtn.addEventListener('click', removeProjectForm);
 
@@ -201,59 +289,7 @@ const DOM = (() => {
     tomorrowBtn.addEventListener('click', showTimeTasks.bind(null, startOfTomorrow()));
   };
 
-  // Utilities
-
-  const types = {
-     Error: 'Error',
-     Success: 'Success',
-   };
-
-  const removeElement = (element) => element.parentElement.removeChild(element);
-
-  const removeElementDelay = (element, delay) => {
-    setTimeout(() => removeElement(element), delay);
-  };
-
-  const toggleAnimation = (element, delay = 1000, name) => {
-    let timer
-    return function() {
-      clearTimeout(timer);
-      element.classList.add(name);
-      timer = setTimeout(() => {
-        element.classList.remove(name);
-      }, delay);
-    }
-  };
-
-  const msgBoxAnim = toggleAnimation(printMsg, 1500, 'fadeIn-up');
-
-  const clearInnerHTML = (element) => element.innerHTML = '';
-
-  const setInputDateToday = () => {
-    const inputDate = document.querySelector('.js-date');
-    inputDate.setAttribute('value', format(new Date(), 'yyyy-MM-dd'));
-  };
-
-  const updateListTitle = (name) => {
-    const title = document.querySelector('.js-tasklist__title');
-    title.textContent = name;
-  };
-
-  const printMessage = (message, type) => {
-    type === types.Error ?
-      printMsg.style.cssText = '--printMsgColor: var(--secondary);--printTextColor: var(--white)' :
-      printMsg.style.cssText = '--printMsgColor: var(--main);--printTextColor: var(--bg)'
-    
-    printMsg.textContent = message;
-    msgBoxAnim();
-  }
-
-  const init = () => {
-    showAllProjects();
-    setTaskFormOptions();
-    fireEvents();
-    setInputDateToday();
-  };
+ 
 
   return {
     taskForm,

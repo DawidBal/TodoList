@@ -1,7 +1,8 @@
 .c-tasklist {
   text-align: center;
-  flex: 4;
-  margin: 0 8vw;
+  flex: 3;
+  margin: 0 auto;
+  max-width: 120ch;
   &__title {
     font-size: 2.5rem;
     color: var(--main);
@@ -10,7 +11,10 @@
   &__container {
     display: flex;
     flex-direction: column;
-    margin-right: 1rem;
+    margin: 0.5rem 1rem;
+  }
+  &__item {
+    display: flex;
   }
 }
 
@@ -40,7 +44,7 @@
 
 .c-form {
   &--tasks {
-    width: 55%;
+    max-width: 75%;
     margin: 0 auto;
     gap: 1rem;
   }
@@ -67,4 +71,8 @@
     );
     background-size: 100% 4ch;
   }
+}
+
+.fadeOut {
+  animation: fadeOut 0.2s ease;
 }
