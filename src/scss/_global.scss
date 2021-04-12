@@ -102,3 +102,20 @@ body {
     }
   }
 }
+
+.c-form {
+  animation: fadeIn 0.3s ease;
+  &__text {
+    margin-top: 0.5rem;
+    border: none;
+    border-bottom: 1px solid var(--main);
+    background: none;
+    color: var(--white);
+  }
+  &__ui {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    line-height: 0;
+  }
+}

@@ -49,8 +49,7 @@
 
 @media only screen and (min-width: 600px) {
   .c-projects {
-    min-width: 15rem;
-    min-height: 80vh;
+    flex: 1;
 
     &__nav {
       &:hover .c-show-form__btn {
@@ -88,26 +87,12 @@
     transition: opacity 0.2s ease, transform 0.4s ease;
   }
 }
-.c-form {
-  animation: fadeIn 0.3s ease;
-  &--project {
-    gap: 0.5rem;
-    padding: 1rem;
-    background: var(--btn-hover);
-    border-radius: 5px;
-  }
-  &__text {
-    margin-top: 0.5rem;
-    border: none;
-    border-bottom: 1px solid var(--main);
-    background: none;
-    color: var(--white);
-  }
-  &__ui {
-    display: flex;
-    justify-content: space-evenly;
-    line-height: 0;
-  }
+
+.c-form--project {
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--btn-hover);
+  border-radius: 5px;
 }
 
 .fade-out {
