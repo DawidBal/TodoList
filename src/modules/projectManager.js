@@ -48,6 +48,17 @@ const projectManager = (() => {
     } else {
       throw new Error("Missing project!");
     }
+  };
+
+  const projectEventHandler = (event) => {
+    const action = event.target.dataset.action;
+    switch (action) {
+      case 'change':
+        DOM.switchActiveProject(event);
+        break;
+      case 'remove':
+        DOM.removeProject(event);
+        break;
   }
   return {getActiveProject, setActiveProject, addNewProject, getAllProjects, removeProject, getDefaultProject, renameProject}
 })();

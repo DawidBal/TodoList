@@ -204,43 +204,6 @@ const DOM = (() => {
     addClassList(event, className);
   };
 
-  // TODO: Move function to projectManager
-  const projectEventHandler = (event) => {
-    const action = event.target.dataset.action;
-    switch(action) {
-      case 'change': switchActiveProject(event);
-        break;
-      case 'remove': removeProject(event);
-        break;
-    }
-  };
-
-  // TODO: Move function to taskManager
-  const taskEventHandler = (event) => {
-    const action = event.target.dataset.action;
-    switch(action) {
-      case 'toggle': 
-        break;
-      case 'remove': taskManager.removeTask(event);
-        break;
-    }
-  };
-
-  // TODO: Move function to projectManager
-  const removeProject = (event) => {
-    const parentElement = event.target.closest('.c-projects__item');
-    const projectName = parentElement.childNodes[0].nodeValue;
-    const tasksInProject = taskManager.getTasksByProject(projectName);
-    const delayTime = 175;
-
-    projectManager.removeProject(projectName);
-    updateListTitle(defaultProject);
-    projectManager.setActiveProject(defaultProject);
-    taskManager.changeTasksProject(tasksInProject, defaultProject);
-    projectsRemoveAnim(parentElement);
-    removeElementDelay(parentElement, delayTime);
-  }
-
   const switchActiveProject = (e) => {
     const projectName = e.target.childNodes[0].nodeValue;
     classHandler(e, 'btn--active');
@@ -265,8 +228,22 @@ const DOM = (() => {
   const removeForm = (form, toggler) => {
     form.parentElement.style.display = 'none';
     toggler.style.display = 'flex';
-  }
+  };
 
+  const removeProject = (event) => {
+    const parentElement = event.target.closest('.c-projects__item');
+    const projectName = parentElement.childNodes[0].nodeValue;
+    const tasksInProject = taskManager.getTasksByProject(projectName);
+    const delayTime = 175;
+
+    projectManager.removeProject(projectName);
+    updateListTitle(defaultProject);
+    projectManager.setActiveProject(defaultProject);
+    taskManager.changeTasksProject(tasksInProject, defaultProject);
+    setTaskFormOptions();
+    projectsRemoveAnim(parentElement);
+    removeElementDelay(parentElement, delayTime);
+  };
 
   // Events
   const fireEvents = () => {

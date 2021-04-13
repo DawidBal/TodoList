@@ -28,6 +28,20 @@ const taskManager = (() => {
   const changeTasksProject = (tasks, projectName) => {
     tasks.forEach(task => task.project = projectName);
   }
+  const taskEventHandler = (event) => {
+    const action = event.target.dataset.action;
+    switch (action) {
+      case 'expand':
+        console.log('Expandind');
+        break;
+      case 'edit':
+        console.log('Editing');
+        break;
+      case 'remove':
+        removeTask(event);
+        break;
+    }
+  };
 
   // TODO: Refactor function - Split into smaller funcitons, think about where to put DOM method.
   const addNewTask = (e) => {
