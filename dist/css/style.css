@@ -8,6 +8,7 @@
   --white: hsl(0, 100%, 100%);
   --main: hsl(163, 98%, 40%);
   --secondary: hsl(2, 68%, 45%);
+  --gray: hsl(0, 0%, 30%);
 }
 
 @keyframes fadeIn-left {
@@ -80,10 +81,18 @@ body {
   background: var(--btn-hover);
   color: var(--main);
 }
-.btn--project {
-  padding: 0;
+.btn--project, .btn--task {
   display: flex;
   align-items: center;
+  padding: 0;
+}
+.btn--task {
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+.btn--task:hover {
+  opacity: 1;
+  background: none;
 }
 .btn--form {
   display: flex;
@@ -300,10 +309,11 @@ body {
 }
 
 .c-tasklist {
-  text-align: center;
   flex: 3;
-  margin: 0 auto;
+  gap: 0.5rem;
   max-width: 120ch;
+  margin: 0 auto;
+  text-align: center;
 }
 .c-tasklist__title {
   font-size: 2.5rem;
@@ -313,14 +323,30 @@ body {
 .c-tasklist__container {
   display: flex;
   flex-direction: column;
-  margin: 0.5rem 1rem;
 }
-.c-tasklist__item {
+.c-tasklist__task {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--grayc);
+  padding: 0.5rem 0;
+}
+.c-tasklist__task:first-child {
+  padding-bottom: 0.5rem;
+  padding-top: 0;
+}
+.c-tasklist__task:last-child {
+  padding-top: 0.5rem;
+  padding-bottom: 0;
+  border: none;
+}
+.c-tasklist__task--done {
+  text-decoration: line-through;
+  color: var(--gray);
 }
 
 .c-show-form__btn--task {
-  width: 30%;
+  width: 40%;
   transform: translateY(0);
   transition: opacity 0.2s ease, background 0.2s ease;
   opacity: 0.3;
@@ -344,8 +370,6 @@ body {
 }
 
 .c-form--tasks {
-  max-width: 75%;
-  margin: 0 auto;
   gap: 1rem;
 }
 .c-form__inputs {
@@ -370,6 +394,22 @@ body {
 
 .fadeOut {
   animation: fadeOut 0.2s ease;
+}
+
+.c-task-options {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.c-task-info {
+  display: flex;
+  gap: 1rem;
+}
+.c-task-info__date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .c-header {

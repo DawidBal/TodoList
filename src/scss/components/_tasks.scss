@@ -1,8 +1,9 @@
 .c-tasklist {
-  text-align: center;
   flex: 3;
-  margin: 0 auto;
+  gap: 0.5rem;
   max-width: 120ch;
+  margin: 0 auto;
+  text-align: center;
   &__title {
     font-size: 2.5rem;
     color: var(--main);
@@ -11,15 +12,32 @@
   &__container {
     display: flex;
     flex-direction: column;
-    margin: 0.5rem 1rem;
   }
-  &__item {
+  &__task {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--grayc);
+    &:first-child {
+      padding-bottom: 0.5rem;
+      padding-top: 0;
+    }
+    &:last-child {
+      padding-top: 0.5rem;
+      padding-bottom: 0;
+      border: none;
+    }
+    padding: 0.5rem 0;
+
+    &--done {
+      text-decoration: line-through;
+      color: var(--gray);
+    }
   }
 }
 
 .c-show-form__btn--task {
-  width: 30%;
+  width: 40%;
   transform: translateY(0);
   transition: opacity 0.2s ease, background 0.2s ease;
   opacity: 0.3;
@@ -44,8 +62,6 @@
 
 .c-form {
   &--tasks {
-    max-width: 75%;
-    margin: 0 auto;
     gap: 1rem;
   }
   &__inputs {
@@ -75,4 +91,20 @@
 
 .fadeOut {
   animation: fadeOut 0.2s ease;
+}
+
+.c-task-options {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.c-task-info {
+  display: flex;
+  gap: 1rem;
+  &__date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 }
