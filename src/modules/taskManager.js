@@ -56,18 +56,22 @@ const taskManager = (() => {
     tasks.forEach((task) => (task.project = projectName));
   };
 
-  const toggleComplete = (task) => {
+  const toggleTaskCompletion = (task) => {
     task.completed = !task.completed;
   };
 
   const taskEventHandler = (event) => {
     const action = event.target.dataset.action;
+    const taskIndex = event.target.closest('.c-tasklist__task').dataset.index;
     switch (action) {
+      case 'toggle':
+        toggleTaskCompletion(tasks[taskIndex]);
+        break;
       case 'expand':
         console.log('Expandind');
         break;
       case 'edit':
-        console.log('Editing');
+        DOM.showTaskEditForm(tasks[taskIndex]);
         break;
       case 'remove':
         removeTask(event);
@@ -91,7 +95,7 @@ const taskManager = (() => {
     saveActiveTasks,
     getActiveTasks,
     changeTasksProject,
-    toggleComplete,
+    changeTasksProject,
     taskEventHandler,
     getTaskCompletionTime,
   };

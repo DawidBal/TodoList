@@ -81,6 +81,15 @@ const DOM = (() => {
     }
   };
 
+  const setActivePriority = ({selectElement, priorityValue}) => {
+    const options = selectElement.querySelectorAll('option');
+    options.forEach((option) => 
+      option.value === priorityValue
+        ? option.setAttribute('selected', '')
+        : option.removeAttribute('selected')
+    );
+  };
+
   const init = () => {
     showAllProjects();
     setTaskFormOptions();
@@ -98,7 +107,7 @@ const DOM = (() => {
   <div class="c-task-toggle">
     <label for="task-${index}" class="checkbox" style="--priorityColor: ${applyPriorityColor(task.priority)}">
       <span class="checkbox__input">
-        <input type="checkbox" data-action="toggle" id="task-${index}" ${task.completed===true ? `disabled` : ``} />
+        <input type="checkbox" data-action="toggle" id="task-${index}" ${task.completed ? `checked` : ``} />
         <span class="checkbox__control">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path fill="none" stroke-width="3" d="M1.73 12.91l6.37 6.37L22.79 4.59" />
@@ -170,6 +179,72 @@ const DOM = (() => {
     showTasks(tasks);
   };
 
+  const createTaskEditHTML = (task) => {
+
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    document.body.append(overlay);
+
+    const taskForm = document.createElement('div');
+    taskForm.classList.add('c-edit-form', 'l-flex');
+    taskForm.innerHTML += 
+    `
+    <form class="c-form c-form--tasks l-flexColumn js-todo-from">
+        <div class="l-flexColumn">
+            <label for="title">Task name</label>
+            <input class="c-form__text" type="text" id="title" name="title" value="${task.title}" required
+                maxlength="80">
+        </div>
+        <div class="l-flexColumn">
+            <label for="notes">Notes</label>
+            <textarea class="c-form__text c-form__text--area" name="notes" id="notes" rows="3" cols="10"
+                placeholder="Task notes">${task.notes}</textarea>
+        </div>
+        <div class="c-form__pickers">
+            <div class="l-flexColumn">
+                <label for="endDate">End Date</label>
+                <input class="js-date" type="date" name="endDate" id="endDate" value=${task.endDate}>
+            </div>
+            <div class="l-flexColumn">
+                <label for="priority">Priority</label>
+                <select class="c-form__priority js-priority" id="priority" name="priority" autocomplete="off">
+                    <option value="3">Low</option>
+                    <option value="2">Medium</option>
+                    <option value="1">High</option>
+                </select>
+            </div>
+            <div class="l-flexColumn">
+                <label for="project">Project</label>
+                <select class="c-form__project js-edit-projects" id="project" name="project"
+                    autocomplete="off"></select>
+            </div>
+        </div>
+        <div class="c-form__ui">
+            <button class="btn btn--form" type="submit">Add<svg class="icon icon--green"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M24 4.685l-16.327 17.315-7.673-9.054.761-.648 6.95 8.203 15.561-16.501.728.685z" />
+                </svg></button>
+            <button class="btn btn--form js-cancelTaskForm" type="reset">Cancel<svg class="icon icon--red"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
+                </svg></button>
+        </div>
+    </form>
+    `
+    document.body.append(taskForm);
+  }
+
+  const showTaskEditForm = (task) => {
+    createTaskEditHTML(task);
+    const projectsSelectElem = document.querySelector('.js-edit-projects');
+    const prioritySelectElem = document.querySelector('.js-priority');
+    setTaskFormOptions(projectsSelectElem);
+    setActiveOption({selectElement: projectsSelectElem, projectName: task.project});
+    setActivePriority({selectElement: prioritySelectElem, priorityValue: task.priority})
+  };
+
   // Projects
   const generateOptionHTML = (projectName) => {
     const newOption = document.createElement('option');
@@ -178,11 +253,11 @@ const DOM = (() => {
     return newOption;
   };
 
-  const setTaskFormOptions = () => {
+  const setTaskFormOptions = (selectElement = selectList) => {
     const projects = projectManager.getAllProjects();
-    clearInnerHTML(selectList);
+    clearInnerHTML(selectElement);
     projects.forEach((projectName) => {
-      selectList.append(generateOptionHTML(projectName));
+      selectElement.append(generateOptionHTML(projectName));
     });
   };
 
@@ -214,14 +289,15 @@ const DOM = (() => {
     });
   };
 
-  const setActiveOption = (projectName) => {
-    const options = selectList.querySelectorAll('option');
+  const setActiveOption = ({selectElement = selectList, projectName}) => {
+    const options = selectElement.querySelectorAll('option');
     options.forEach((option) =>
       option.value === projectName
         ? option.setAttribute('selected', '')
         : option.removeAttribute('selected')
     );
   };
+
 
   const addClassList = (event, className) =>
     event.target.classList.add(className);
@@ -240,8 +316,6 @@ const DOM = (() => {
     removeClassList(className);
     addClassList(event, className);
   };
-
-  
 
   const showProjectForm = () => showForm(projectForm, showProjFormBtn);
   const removeProjectForm = () => removeForm(projectForm, showProjFormBtn);
@@ -288,6 +362,7 @@ const DOM = (() => {
     showTasks,
     showTask,
     showNewProject,
+    showTaskEditForm,
     removeTaskElement,
     removeTaskForm,
     removeProjectForm,
@@ -302,4 +377,5 @@ const DOM = (() => {
     init,
   };
 })();
+
 export default DOM;

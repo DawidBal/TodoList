@@ -9,6 +9,9 @@
     color: var(--main);
     animation: fadeIn 0.3s ease;
   }
+  &__container {
+    margin: 0 1rem;
+  }
   &__task {
     border-bottom: 1px solid var(--opWhite);
     &:first-child {
@@ -21,11 +24,6 @@
       border: none;
     }
     padding: 0.5rem 0;
-
-    &--done {
-      text-decoration: line-through;
-      color: var(--opWhite);
-    }
   }
 }
 
@@ -95,4 +93,12 @@
 
 .c-task-project-name {
   color: var(--main);
+}
+
+.c-edit-form {
+  z-index: 2;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

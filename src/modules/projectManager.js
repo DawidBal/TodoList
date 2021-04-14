@@ -59,7 +59,7 @@ const projectManager = (() => {
     DOM.classHandler(e, 'btn--active');
     setActiveProject(projectName);
     DOM.updateListTitle(projectName);
-    DOM.setActiveOption(projectName);
+    DOM.setActiveOption({projectName});
     DOM.showTasks(taskManager.getTasksByProject(projectName));
   };
 
