@@ -92,37 +92,52 @@ const DOM = (() => {
   const generateTaskHTML = (task, index) => {
     const newTask = document.createElement('div');
     newTask.setAttribute('data-index', index);
-    newTask.classList.add(`c-tasklist__task`);
-    newTask.classList.add(`priority-${task.priority}`);
+    newTask.classList.add(`c-tasklist__task`, `l-flexColumn`);
     newTask.innerHTML = `
-      <div class="c-task-info">
-      <label for="task-${index}" class="checkbox" style="--priorityColor: ${applyPriorityColor(task.priority)}">
+<div class="c-task-actions l-flex l-jC-sb">
+  <div class="c-task-toggle">
+    <label for="task-${index}" class="checkbox" style="--priorityColor: ${applyPriorityColor(task.priority)}">
       <span class="checkbox__input">
-        <input type="checkbox" data-action="toggle" id="task-${index}" ${task.completed === true ? `disabled` : ``} />
+        <input type="checkbox" data-action="toggle" id="task-${index}" ${task.completed===true ? `disabled` : ``} />
         <span class="checkbox__control">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path fill="none" stroke-width="3" d="M1.73 12.91l6.37 6.37L22.79 4.59" />
+          <path fill="none" stroke-width="3" d="M1.73 12.91l6.37 6.37L22.79 4.59" />
           </svg>
         </span>
       </span>
       <h2 class="radio__label">${task.title}</h2>
-      </label>
-      <div class="c-task-info__date">
-        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 23h-24v-19h4v-3h4v3h8v-3h4v3h4v19zm-1-15h-22v14h22v-14zm-16.501 8.794l1.032-.128c.201.93.693 1.538 1.644 1.538.957 0 1.731-.686 1.731-1.634 0-.989-.849-1.789-2.373-1.415l.115-.843c.91.09 1.88-.348 1.88-1.298 0-.674-.528-1.224-1.376-1.224-.791 0-1.364.459-1.518 1.41l-1.032-.171c.258-1.319 1.227-2.029 2.527-2.029 1.411 0 2.459.893 2.459 2.035 0 .646-.363 1.245-1.158 1.586.993.213 1.57.914 1.57 1.928 0 1.46-1.294 2.451-2.831 2.451-1.531 0-2.537-.945-2.67-2.206zm9.501 2.206h-1.031v-6.265c-.519.461-1.354.947-1.969 1.159v-.929c1.316-.576 2.036-1.402 2.336-1.965h.664v8zm7-14h-22v2h22v-2zm-16-3h-2v2h2v-2zm12 0h-2v2h2v-2z"/></svg>
-        <p class="c-task-into__text">${taskManager.getTaskCompletionTime(task)}<p>
-      </div>
-      </div>
-      <div class="c-task-options">
-      <button class="btn btn--task" data-action="expand">
-        <svg class="icon icon--task" data-action="expand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path data-action="expand" d="M23.245 4l-11.245 14.374-11.219-14.374-.781.619 12 15.381 12-15.391-.755-.609z"/></svg>
-      </button>
-      <button class="btn btn--task" data-action="edit">
-        <svg class="icon icon--task" data-action="edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path data-action="edit" d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z"/></svg>
-      </button>
-      <button class="btn btn--task" data-action="remove">
-        <svg class="icon icon--task" data-action="remove" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path data-action="remove" d="M9 3h6v-1.75c0-.066-.026-.13-.073-.177-.047-.047-.111-.073-.177-.073h-5.5c-.066 0-.13.026-.177.073-.047.047-.073.111-.073.177v1.75zm11 1h-16v18c0 .552.448 1 1 1h14c.552 0 1-.448 1-1v-18zm-10 3.5c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm5 0c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm8-4.5v1h-2v18c0 1.105-.895 2-2 2h-14c-1.105 0-2-.895-2-2v-18h-2v-1h7v-2c0-.552.448-1 1-1h6c.552 0 1 .448 1 1v2h7z"/></svg>
-      </button>
-      </div>`;
+    </label>
+  </div>
+  <div class="c-task-options l-flex l-aI-c">
+    <button class="btn btn--task l-flex l-aI-c" data-action="expand">
+      <svg class="icon icon--task" data-action="expand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path data-action="expand" d="M23.245 4l-11.245 14.374-11.219-14.374-.781.619 12 15.381 12-15.391-.755-.609z" />
+      </svg>
+    </button>
+    <button class="btn btn--task l-flex l-aI-c" data-action="edit">
+      <svg class="icon icon--task" data-action="edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path data-action="edit" d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z" />
+      </svg>
+    </button>
+    <button class="btn btn--task l-flex l-aI-c" data-action="remove">
+      <svg class="icon icon--task" data-action="remove" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path data-action="remove" d="M9 3h6v-1.75c0-.066-.026-.13-.073-.177-.047-.047-.111-.073-.177-.073h-5.5c-.066 0-.13.026-.177.073-.047.047-.073.111-.073.177v1.75zm11 1h-16v18c0 .552.448 1 1 1h14c.552 0 1-.448 1-1v-18zm-10 3.5c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm5 0c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm8-4.5v1h-2v18c0 1.105-.895 2-2 2h-14c-1.105 0-2-.895-2-2v-18h-2v-1h7v-2c0-.552.448-1 1-1h6c.552 0 1 .448 1 1v2h7z" />
+      </svg>
+    </button>
+  </div>
+</div>
+<div class="c-task-info l-flex l-jC-sb">
+  <div class="c-task-info__date l-flex l-aI-c">
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M24 23h-24v-19h4v-3h4v3h8v-3h4v3h4v19zm-1-15h-22v14h22v-14zm-16.501 8.794l1.032-.128c.201.93.693 1.538 1.644 1.538.957 0 1.731-.686 1.731-1.634 0-.989-.849-1.789-2.373-1.415l.115-.843c.91.09 1.88-.348 1.88-1.298 0-.674-.528-1.224-1.376-1.224-.791 0-1.364.459-1.518 1.41l-1.032-.171c.258-1.319 1.227-2.029 2.527-2.029 1.411 0 2.459.893 2.459 2.035 0 .646-.363 1.245-1.158 1.586.993.213 1.57.914 1.57 1.928 0 1.46-1.294 2.451-2.831 2.451-1.531 0-2.537-.945-2.67-2.206zm9.501 2.206h-1.031v-6.265c-.519.461-1.354.947-1.969 1.159v-.929c1.316-.576 2.036-1.402 2.336-1.965h.664v8zm7-14h-22v2h22v-2zm-16-3h-2v2h2v-2zm12 0h-2v2h2v-2z" />
+    </svg>
+    <p class="c-task-into__text">${taskManager.getTaskCompletionTime(task)}</p>
+  </div>
+  <div class="c-task-info__project">
+    <p class="c-task-project-name">${task.project}</p>
+  </div>
+</div>
+`;
 
     return newTask;
   };
@@ -180,7 +195,7 @@ const DOM = (() => {
     newProject.classList.add('btn');
     newProject.setAttribute('data-action', 'change');
     newProject.innerHTML = `${projectName}<div class="c-projects__icons">
-      <button class="btn btn--project" data-action="remove">
+      <button class="btn btn--project l-flex l-aI-c" data-action="remove">
         <svg class="icon icon--project" data-action="remove" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path data-action="remove" d="M9 3h6v-1.75c0-.066-.026-.13-.073-.177-.047-.047-.111-.073-.177-.073h-5.5c-.066 0-.13.026-.177.073-.047.047-.073.111-.073.177v1.75zm11 1h-16v18c0 .552.448 1 1 1h14c.552 0 1-.448 1-1v-18zm-10 3.5c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm5 0c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm8-4.5v1h-2v18c0 1.105-.895 2-2 2h-14c-1.105 0-2-.895-2-2v-18h-2v-1h7v-2c0-.552.448-1 1-1h6c.552 0 1 .448 1 1v2h7z"/></svg>
       </button>
     </div>`;

@@ -9,15 +9,8 @@
     color: var(--main);
     animation: fadeIn 0.3s ease;
   }
-  &__container {
-    display: flex;
-    flex-direction: column;
-  }
   &__task {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--grayc);
+    border-bottom: 1px solid var(--opWhite);
     &:first-child {
       padding-bottom: 0.5rem;
       padding-top: 0;
@@ -31,7 +24,7 @@
 
     &--done {
       text-decoration: line-through;
-      color: var(--gray);
+      color: var(--opWhite);
     }
   }
 }
@@ -51,12 +44,10 @@
 }
 
 .c-show-form {
-  display: flex;
   justify-content: center;
 }
 
 .c-todo-form {
-  display: flex;
   gap: 1rem;
 }
 
@@ -64,15 +55,13 @@
   &--tasks {
     gap: 1rem;
   }
-  &__inputs {
+  &__inputs,
+  &__pickers {
     display: flex;
     gap: 1rem;
     justify-content: center;
   }
   &__pickers {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
     & > .l-flexColumn {
       flex: 1;
     }
@@ -94,17 +83,16 @@
 }
 
 .c-task-options {
-  display: flex;
-  align-items: center;
   gap: 1rem;
 }
 
 .c-task-info {
-  display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   &__date {
-    display: flex;
-    align-items: center;
     gap: 0.5rem;
   }
+}
+
+.c-task-project-name {
+  color: var(--main);
 }
