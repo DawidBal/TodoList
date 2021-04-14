@@ -8,6 +8,7 @@
   --white: hsl(0, 100%, 100%);
   --main: hsl(163, 98%, 40%);
   --secondary: hsl(2, 68%, 45%);
+  --black: hsl(0, 0%, 0%);
   /* Border */
   --opWhite: hsla(0, 0%, 100%, 0.3);
 }
@@ -231,6 +232,15 @@ body {
   opacity: 1;
 }
 
+.overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: var(--black);
+  opacity: 0.5;
+  z-index: 1;
+}
+
 .c-projects {
   padding: 1rem;
   background: var(--bg-aside);
@@ -331,6 +341,9 @@ body {
   color: var(--main);
   animation: fadeIn 0.3s ease;
 }
+.c-tasklist__container {
+  margin: 0 1rem;
+}
 .c-tasklist__task {
   border-bottom: 1px solid var(--opWhite);
   padding: 0.5rem 0;
@@ -343,10 +356,6 @@ body {
   padding-top: 0.5rem;
   padding-bottom: 0;
   border: none;
-}
-.c-tasklist__task--done {
-  text-decoration: line-through;
-  color: var(--opWhite);
 }
 
 .c-show-form__btn--task {
@@ -406,6 +415,14 @@ body {
 
 .c-task-project-name {
   color: var(--main);
+}
+
+.c-edit-form {
+  z-index: 2;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .c-header {
