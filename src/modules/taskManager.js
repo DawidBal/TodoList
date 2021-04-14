@@ -11,16 +11,30 @@ const taskManager = (() => {
   const saveActiveTasks = (taskArray) => {
     visibleTasks = Array.from(taskArray);
   };
-
-  const getActiveTasks = () => visibleTasks;
-
+  
   const addItemToArray = (arr, item) => arr.push(item);
 
+    // TODO: Refactor function - Split into smaller funcitons, think about where to put DOM method.
+  const addNewTask = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const newTodo = createTodo(formData);
+    addItemToArray(tasks, newTodo);
+    if (newTodo.project === projectManager.getActiveProject()) {
+      DOM.showTask(newTodo, tasks.indexOf(newTodo));
+      visibleTasks.push(newTodo);
+    }
+    DOM.removeTaskForm();
+    e.target.reset();
+  };
+  
   const createTodo = (data) => {
     const objFromData = Object.fromEntries(data);
     return todoItem(objFromData);
   };
 
+  const getActiveTasks = () => visibleTasks;
+  
   const getTasksByProject = (projectName) => {
     return tasks.filter((task) => task.project === projectName);
   };
@@ -61,18 +75,6 @@ const taskManager = (() => {
     }
   };
 
-  // TODO: Refactor function - Split into smaller funcitons, think about where to put DOM method.
-  const addNewTask = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const newTodo = createTodo(formData);
-    addItemToArray(tasks, newTodo);
-    if (newTodo.project === projectManager.getActiveProject()) {
-      DOM.showTask(newTodo, tasks.indexOf(newTodo));
-      visibleTasks.push(newTodo);
-    }
-    e.target.reset();
-  };
 
   const removeTask = (event) => {
     const taskIndex = event.target.closest('.c-tasklist__task').dataset.index;

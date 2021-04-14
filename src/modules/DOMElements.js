@@ -44,7 +44,7 @@ const DOM = (() => {
     };
   };
 
-  const projectsRemoveAnim = toggleAnimation(175, 'moveOut-left');
+  const removeProjectsAnim = toggleAnimation(175, 'moveOut-left');
   const msgBoxAnim = toggleAnimation(1500, 'fadeIn-up');
 
   const clearInnerHTML = (element) => (element.innerHTML = '');
@@ -226,14 +226,7 @@ const DOM = (() => {
     addClassList(event, className);
   };
 
-  const switchActiveProject = (e) => {
-    const projectName = e.target.childNodes[0].nodeValue;
-    classHandler(e, 'btn--active');
-    projectManager.setActiveProject(projectName);
-    updateListTitle(projectName);
-    setActiveOption(projectName);
-    showTasks(taskManager.getTasksByProject(projectName));
-  };
+  
 
   const showProjectForm = () => showForm(projectForm, showProjFormBtn);
   const removeProjectForm = () => removeForm(projectForm, showProjFormBtn);
@@ -251,20 +244,7 @@ const DOM = (() => {
     toggler.style.display = 'flex';
   };
 
-  const removeProject = (event) => {
-    const parentElement = event.target.closest('.c-projects__item');
-    const projectName = parentElement.childNodes[0].nodeValue;
-    const tasksInProject = taskManager.getTasksByProject(projectName);
-    const delayTime = 175;
-
-    projectManager.removeProject(projectName);
-    updateListTitle(defaultProject);
-    projectManager.setActiveProject(defaultProject);
-    taskManager.changeTasksProject(tasksInProject, defaultProject);
-    setTaskFormOptions();
-    projectsRemoveAnim(parentElement);
-    removeElementDelay(parentElement, delayTime);
-  };
+  
 
   // Events
   const fireEvents = () => {
@@ -281,7 +261,7 @@ const DOM = (() => {
     showProjFormBtn.addEventListener('click', showProjectForm);
     cancelProjFormBtn.addEventListener('click', removeProjectForm);
 
-    inboxBtn.addEventListener('click', switchActiveProject);
+    inboxBtn.addEventListener('click', projectManager.switchActiveProject);
     todayBtn.addEventListener('click',showTimeTasks.bind(null, startOfToday()));
     tomorrowBtn.addEventListener('click',showTimeTasks.bind(null, startOfTomorrow()));
   };
@@ -289,21 +269,22 @@ const DOM = (() => {
   return {
     taskForm,
     taskList,
+    types,
     showTasks,
     showTask,
-    removeTaskElement,
     showNewProject,
-    init,
+    removeTaskElement,
+    removeTaskForm,
+    removeProjectForm,
+    removeElementDelay,
+    removeProjectsAnim,
     setTaskFormOptions,
     setNewTaskOption,
-    removeProjectForm,
+    setActiveOption,
     printMessage,
+    classHandler,
     updateListTitle,
-    projectsRemoveAnim,
-    removeElementDelay,
-    switchActiveProject,
-    types,
-    removeProject,
+    init,
   };
 })();
 export default DOM;

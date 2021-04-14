@@ -1,4 +1,5 @@
 import DOM from './DOMElements';
+import taskManager from './taskManager'
 
 const projectManager = (() => {
   const projects = ['Inbox'];
@@ -30,12 +31,36 @@ const projectManager = (() => {
   };
 
   // TODO: Add error handling
-  const removeProject = (projectName) => {
+  const spliceProject = (projectName) => {
     projects.splice(projects.indexOf(projectName), 1);
+  };
+
+  const removeProject = (event) => {
+    const parentElement = event.target.closest('.c-projects__item');
+    const projectName = parentElement.childNodes[0].nodeValue;
+    const tasksInProject = taskManager.getTasksByProject(projectName);
+    const delayTime = 175;
+
+    spliceProject(projectName);
+    DOM.updateListTitle(defaultProject);
+    projectManager.setActiveProject(defaultProject);
+    taskManager.changeTasksProject(tasksInProject, defaultProject);
+    DOM.setTaskFormOptions();
+    DOM.removeProjectsAnim(parentElement);
+    DOM.removeElementDelay(parentElement, delayTime);
   };
 
   const renameProject = (projectName, newProjectName) => {
     projects[projects.indexOf(projectName)] = newProjectName;
+  };
+
+  const switchActiveProject = (e) => {
+    const projectName = e.target.childNodes[0].nodeValue;
+    DOM.classHandler(e, 'btn--active');
+    setActiveProject(projectName);
+    DOM.updateListTitle(projectName);
+    DOM.setActiveOption(projectName);
+    DOM.showTasks(taskManager.getTasksByProject(projectName));
   };
 
   const getAllProjects = () => projects;
@@ -54,23 +79,24 @@ const projectManager = (() => {
     const action = event.target.dataset.action;
     switch (action) {
       case 'change':
-        DOM.switchActiveProject(event);
+        switchActiveProject(event);
         break;
       case 'remove':
-        DOM.removeProject(event);
+        removeProject(event);
         break;
     }
   };
 
   return {
     getActiveProject,
+    getAllProjects,
+    getDefaultProject,
     setActiveProject,
     addNewProject,
-    getAllProjects,
-    removeProject,
-    getDefaultProject,
+    spliceProject,
     renameProject,
     projectEventHandler,
+    switchActiveProject
   };
 })();
 
