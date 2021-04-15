@@ -20,7 +20,7 @@ const taskManager = (() => {
     const formData = new FormData(e.target);
     const newTodo = createTodo(formData);
     addItemToArray(tasks, newTodo);
-    if (newTodo.project === projectManager.getActiveProject()) {
+    if (newTodo.project === projectManager.getActiveTab()) {
       DOM.showTask(newTodo, tasks.indexOf(newTodo));
       visibleTasks.push(newTodo);
     }
@@ -71,8 +71,12 @@ const taskManager = (() => {
         console.log('Expandind');
         break;
       case 'edit':
-        DOM.showTaskEditForm(tasks[taskIndex]);
-        handleEditEvents(taskIndex);
+        if(tasks[taskIndex].completed === false) {
+          DOM.showTaskEditForm(tasks[taskIndex]);
+          handleEditEvents(taskIndex);
+        } else {
+          DOM.printMessage("Cannot modify completed task!", DOM.types.Info);
+        }
         break;
       case 'remove':
         removeTask(event);
@@ -81,7 +85,10 @@ const taskManager = (() => {
   };
 
   const updateTaskData = (taskIndex, newData) => {
-    tasks[taskIndex] = createTodo(newData);
+    const data = Object.fromEntries(newData);
+    for (const [key, value] of Object.entries(data)) {
+      tasks[taskIndex][key] = value;
+    }
   }
 
   const handleEditEvents = (taskIndex) => {
@@ -101,6 +108,7 @@ const taskManager = (() => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const updateData = new FormData(e.target);
+      console.log(updateData);
       updateTaskData(taskIndex, updateData);
       DOM.updateTask(tasks[taskIndex], taskIndex);
       removeEditElements();
@@ -112,7 +120,7 @@ const taskManager = (() => {
     const taskIndex = event.target.closest('.c-tasklist__task').dataset.index;
     tasks.splice(taskIndex, 1);
     DOM.removeTaskElement(taskIndex);
-    DOM.showTasks(getActiveTasks());
+    DOM.showTasks(visibleTasks);
   };
 
   return {
