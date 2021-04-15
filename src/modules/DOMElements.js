@@ -170,6 +170,16 @@ const DOM = (() => {
     element.remove();
   };
 
+  const updateTask = (task, index) => {
+    const oldTask = taskList.querySelector(`[data-index="${index}"`);
+    if(task.project === projectManager.getActiveProject()) {
+      const newTask = generateTaskHTML(task, index);
+      oldTask.replaceWith(newTask);
+    } else {
+      oldTask.remove();
+    }
+  };
+
   const showTimeTasks = (date, e) => {
     classHandler(e, 'btn--active');
     updateListTitle(e.target.textContent);
@@ -189,7 +199,7 @@ const DOM = (() => {
     taskForm.classList.add('c-edit-form', 'l-flex');
     taskForm.innerHTML += 
     `
-    <form class="c-form c-form--tasks l-flexColumn js-todo-from">
+    <form class="c-form c-form--tasks l-flexColumn js-update-from">
         <div class="l-flexColumn">
             <label for="title">Task name</label>
             <input class="c-form__text" type="text" id="title" name="title" value="${task.title}" required
@@ -220,12 +230,12 @@ const DOM = (() => {
             </div>
         </div>
         <div class="c-form__ui">
-            <button class="btn btn--form" type="submit">Add<svg class="icon icon--green"
+            <button class="btn btn--form" type="submit">Update<svg class="icon icon--green"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
                         d="M24 4.685l-16.327 17.315-7.673-9.054.761-.648 6.95 8.203 15.561-16.501.728.685z" />
                 </svg></button>
-            <button class="btn btn--form js-cancelTaskForm" type="reset">Cancel<svg class="icon icon--red"
+            <button class="btn btn--form js-edit-cancel" type="reset">Cancel<svg class="icon icon--red"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
                         d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
@@ -374,6 +384,7 @@ const DOM = (() => {
     printMessage,
     classHandler,
     updateListTitle,
+    updateTask,
     init,
   };
 })();

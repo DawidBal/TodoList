@@ -72,12 +72,40 @@ const taskManager = (() => {
         break;
       case 'edit':
         DOM.showTaskEditForm(tasks[taskIndex]);
+        handleEditEvents(taskIndex);
         break;
       case 'remove':
         removeTask(event);
         break;
     }
   };
+
+  const updateTaskData = (taskIndex, newData) => {
+    tasks[taskIndex] = createTodo(newData);
+  }
+
+  const handleEditEvents = (taskIndex) => {
+    const cancel = document.querySelector('.js-edit-cancel');
+    const form = document.querySelector('.js-update-from');
+    const editForm = document.querySelector('.c-edit-form');
+    const overlay = document.querySelector('.overlay');
+
+    const removeEditElements = () => {
+        editForm.remove();
+        overlay.remove();
+    };
+
+    cancel.addEventListener('click', () => removeEditElements(), 
+    {once: true});
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const updateData = new FormData(e.target);
+      updateTaskData(taskIndex, updateData);
+      DOM.updateTask(tasks[taskIndex], taskIndex);
+      removeEditElements();
+    }, {once: true})
+  }
 
 
   const removeTask = (event) => {
