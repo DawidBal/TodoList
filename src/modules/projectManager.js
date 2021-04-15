@@ -4,10 +4,10 @@ import taskManager from './taskManager'
 const projectManager = (() => {
   const projects = ['Inbox'];
 
-  let activeProject = 'Inbox';
-  const defaultProject = 'Inbox';
+  let activeTab = 'Inbox';
+  const defaultTab = 'Inbox';
 
-  const getDefaultProject = () => defaultProject;
+  const getDefaultTab = () => defaultTab;
 
   const addNewProject = (e) => {
     e.preventDefault();
@@ -15,7 +15,7 @@ const projectManager = (() => {
 
     if (isAlreadyCreated(projectName)) {
       DOM.printMessage(`Project ${projectName} is already created`,
-      DOM.types.Error);
+      DOM.types.Info);
       return;
     }
 
@@ -42,9 +42,9 @@ const projectManager = (() => {
     const delayTime = 175;
 
     spliceProject(projectName);
-    DOM.updateListTitle(defaultProject);
-    projectManager.setActiveProject(defaultProject);
-    taskManager.changeTasksProject(tasksInProject, defaultProject);
+    DOM.updateListTitle(defaultTab);
+    projectManager.setActiveTab();
+    taskManager.changeTasksProject(tasksInProject, defaultTab);
     DOM.setTaskFormOptions();
     DOM.removeProjectsAnim(parentElement);
     DOM.removeElementDelay(parentElement, delayTime);
@@ -54,32 +54,29 @@ const projectManager = (() => {
     projects[projects.indexOf(projectName)] = newProjectName;
   };
 
-  const switchActiveProject = (e) => {
+  const switchActiveTab = (e) => {
     const projectName = e.target.childNodes[0].nodeValue;
-    DOM.classHandler(e, 'btn--active');
-    setActiveProject(projectName);
     DOM.updateListTitle(projectName);
+    setActiveTab();
+    DOM.classHandler(e, 'btn--active');
     DOM.setActiveOption({projectName});
     DOM.showTasks(taskManager.getTasksByProject(projectName));
   };
 
   const getAllProjects = () => projects;
 
-  const getActiveProject = () => activeProject;
+  const getActiveTab = () => activeTab;
 
-  const setActiveProject = (projectName) => {
-    if (isAlreadyCreated(projectName)) {
-      activeProject = projectName;
-    } else {
-      throw new Error('Missing project!');
-    }
+  const setActiveTab = () => {
+      const title = document.querySelector('.js-tasklist__title').textContent;
+      activeTab = title;
   };
 
   const projectEventHandler = (event) => {
     const action = event.target.dataset.action;
     switch (action) {
       case 'change':
-        switchActiveProject(event);
+        switchActiveTab(event);
         break;
       case 'remove':
         removeProject(event);
@@ -88,15 +85,15 @@ const projectManager = (() => {
   };
 
   return {
-    getActiveProject,
+    getActiveTab,
     getAllProjects,
-    getDefaultProject,
-    setActiveProject,
+    getDefaultTab,
+    setActiveTab,
     addNewProject,
     spliceProject,
     renameProject,
     projectEventHandler,
-    switchActiveProject
+    switchActiveTab
   };
 })();
 

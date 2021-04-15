@@ -20,11 +20,11 @@ const DOM = (() => {
   const tomorrowBtn = document.querySelector('.js-tomorrow');
   const printMsg = document.querySelector('.js-printMsg');
 
-  const defaultProject = projectManager.getDefaultProject();
+  const defaultTab = projectManager.getDefaultTab();
 
   const types = {
     Error: 'Error',
-    Success: 'Success',
+    Info: 'Info',
   };
 
   const removeElement = (element) => element.parentElement.removeChild(element);
@@ -172,7 +172,7 @@ const DOM = (() => {
 
   const updateTask = (task, index) => {
     const oldTask = taskList.querySelector(`[data-index="${index}"`);
-    if(task.project === projectManager.getActiveProject()) {
+    if(task.project === projectManager.getActiveTab()) {
       const newTask = generateTaskHTML(task, index);
       oldTask.replaceWith(newTask);
     } else {
@@ -180,9 +180,11 @@ const DOM = (() => {
     }
   };
 
+  // TODO: Fix bug with disappearing tasks when editing any data
   const showTimeTasks = (date, e) => {
     classHandler(e, 'btn--active');
     updateListTitle(e.target.textContent);
+    projectManager.setActiveTab();
     const tasks = taskManager.tasks.filter((task) => {
       return new Date(task.endDate).getDate() - date.getDate() === 0;
     });
@@ -294,7 +296,7 @@ const DOM = (() => {
     clearInnerHTML(projectList);
     const projectNames = projectManager.getAllProjects();
     projectNames.forEach((projectName) => {
-      if (projectName === defaultProject) return;
+      if (projectName === defaultTab) return;
       projectList.append(generateProjectHTML(projectName));
     });
   };
@@ -360,9 +362,9 @@ const DOM = (() => {
     showProjFormBtn.addEventListener('click', showProjectForm);
     cancelProjFormBtn.addEventListener('click', removeProjectForm);
 
-    inboxBtn.addEventListener('click', projectManager.switchActiveProject);
-    todayBtn.addEventListener('click',showTimeTasks.bind(null, startOfToday()));
-    tomorrowBtn.addEventListener('click',showTimeTasks.bind(null, startOfTomorrow()));
+    inboxBtn.addEventListener('click', projectManager.switchActiveTab);
+    todayBtn.addEventListener('click', showTimeTasks.bind(null, startOfToday()));
+    tomorrowBtn.addEventListener('click', showTimeTasks.bind(null, startOfTomorrow()));
   };
 
   return {
