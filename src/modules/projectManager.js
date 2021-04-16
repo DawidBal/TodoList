@@ -31,20 +31,18 @@ const projectManager = (() => {
   };
 
   // TODO: Add error handling
-  const spliceProject = (projectName) => {
-    projects.splice(projects.indexOf(projectName), 1);
-  };
+  const spliceProject = (projectName) => projects.splice(projects.indexOf(projectName), 1);
 
   const removeProject = (event) => {
     const parentElement = event.target.closest('.c-projects__item');
     const projectName = parentElement.childNodes[0].nodeValue;
     const tasksInProject = taskManager.getTasksByProject(projectName);
     const delayTime = 175;
-    
+
+    taskManager.changeTasksProject(tasksInProject, defaultTab);
     spliceProject(projectName);
     DOM.updateListTitle(defaultTab);
     projectManager.setActiveTab();
-    taskManager.changeTasksProject(tasksInProject, defaultTab);
     DOM.setTaskFormOptions();
     DOM.removeProjectsAnim(parentElement);
     DOM.removeElementDelay(parentElement, delayTime);

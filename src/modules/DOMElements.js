@@ -33,7 +33,7 @@ const DOM = (() => {
     setTimeout(() => removeElement(element), delay);
   };
 
-  const toggleAnimation = (delay = 1000, name) => {
+  const toggleAnimation = (delay = 175, name) => {
     let timer;
     return function (element) {
       clearTimeout(timer);
@@ -45,6 +45,7 @@ const DOM = (() => {
   };
 
   const removeProjectsAnim = toggleAnimation(175, 'moveOut-left');
+  const removeTaskAnim = toggleAnimation(175, 'fadeOut');
   const msgBoxAnim = toggleAnimation(1500, 'fadeIn-up');
 
   const clearInnerHTML = (element) => (element.innerHTML = '');
@@ -180,7 +181,6 @@ const DOM = (() => {
     }
   };
 
-  // TODO: Fix bug with disappearing tasks when editing any data
   const showTimeTasks = (date, e) => {
     classHandler(e, 'btn--active');
     updateListTitle(e.target.textContent);
@@ -246,7 +246,7 @@ const DOM = (() => {
     </form>
     `
     document.body.append(taskForm);
-  }
+  };
 
   const showTaskEditForm = (task) => {
     createTaskEditHTML(task);
@@ -346,7 +346,6 @@ const DOM = (() => {
   };
 
   
-
   // Events
   const fireEvents = () => {
     // Task Events
@@ -380,6 +379,7 @@ const DOM = (() => {
     removeProjectForm,
     removeElementDelay,
     removeProjectsAnim,
+    removeTaskAnim,
     setTaskFormOptions,
     setNewTaskOption,
     setActiveOption,

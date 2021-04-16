@@ -116,10 +116,11 @@ const taskManager = (() => {
 
 
   const removeTask = (event) => {
-    const taskIndex = event.target.closest('.c-tasklist__task').dataset.index;
+    const taskElement = event.target.closest('.c-tasklist__task');
+    const taskIndex = taskElement.dataset.index;
     tasks.splice(taskIndex, 1);
-    DOM.removeTaskElement(taskIndex);
-    DOM.showTasks(visibleTasks);
+    DOM.removeTaskAnim(taskElement);
+    setTimeout(() => DOM.showTasks(visibleTasks), 175);
   };
 
   return {
