@@ -40,7 +40,7 @@ const projectManager = (() => {
     const projectName = parentElement.childNodes[0].nodeValue;
     const tasksInProject = taskManager.getTasksByProject(projectName);
     const delayTime = 175;
-
+    
     spliceProject(projectName);
     DOM.updateListTitle(defaultTab);
     projectManager.setActiveTab();

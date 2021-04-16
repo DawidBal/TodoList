@@ -20,7 +20,7 @@ const taskManager = (() => {
     const formData = new FormData(e.target);
     const newTodo = createTodo(formData);
     addItemToArray(tasks, newTodo);
-    if (newTodo.project === projectManager.getActiveTab()) {
+    if (newTodo.project === projectManager.getActiveTab() || getTaskCompletionTime(newTodo) === projectManager.getActiveTab()) {
       DOM.showTask(newTodo, tasks.indexOf(newTodo));
       visibleTasks.push(newTodo);
     }
@@ -108,7 +108,6 @@ const taskManager = (() => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const updateData = new FormData(e.target);
-      console.log(updateData);
       updateTaskData(taskIndex, updateData);
       DOM.updateTask(tasks[taskIndex], taskIndex);
       removeEditElements();

@@ -172,7 +172,7 @@ const DOM = (() => {
 
   const updateTask = (task, index) => {
     const oldTask = taskList.querySelector(`[data-index="${index}"`);
-    if(task.project === projectManager.getActiveTab()) {
+    if(task.project === projectManager.getActiveTab() || taskManager.getTaskCompletionTime(task) === projectManager.getActiveTab()) {
       const newTask = generateTaskHTML(task, index);
       oldTask.replaceWith(newTask);
     } else {
