@@ -2,12 +2,16 @@ import DOM from './DOMElements';
 import taskManager from './taskManager'
 
 const projectManager = (() => {
-  const projects = ['Inbox'];
+  const projects = JSON.parse(localStorage.getItem('projects')) || ['Inbox'];
 
   let activeTab = 'Inbox';
   const defaultTab = 'Inbox';
 
   const getDefaultTab = () => defaultTab;
+
+  const addToLocalStorage = () => {
+    localStorage.setItem('projects', JSON.stringify(projects));
+  };
 
   const addNewProject = (e) => {
     e.preventDefault();
@@ -23,6 +27,7 @@ const projectManager = (() => {
     DOM.showNewProject(projectName);
     DOM.setNewTaskOption(projectName);
     DOM.removeProjectForm();
+    addToLocalStorage();
     e.target.reset();
   };
 
@@ -30,22 +35,32 @@ const projectManager = (() => {
     return projects.includes(projectName);
   };
 
-  // TODO: Add error handling
   const spliceProject = (projectName) => projects.splice(projects.indexOf(projectName), 1);
 
   const removeProject = (event) => {
     const parentElement = event.target.closest('.c-projects__item');
     const projectName = parentElement.childNodes[0].nodeValue;
-    const tasksInProject = taskManager.getTasksByProject(projectName);
     const delayTime = 175;
+    const date = activeTab === 'Today' ? DOM.startOfToday() : DOM.startOfTomorrow();
+    const tasksInProject = taskManager.getTasksByProject(projectName);
 
     taskManager.changeTasksProject(tasksInProject, defaultTab);
     spliceProject(projectName);
-    DOM.updateListTitle(defaultTab);
-    projectManager.setActiveTab();
     DOM.setTaskFormOptions();
     DOM.removeProjectsAnim(parentElement);
     DOM.removeElementDelay(parentElement, delayTime);
+    DOM.showTasks(taskManager.getTasksByProject(activeTab));
+
+    if(projectName === activeTab) {
+      DOM.updateListTitle(defaultTab);
+      projectManager.setActiveTab();
+      document.querySelector('.js-inbox').classList.add('btn--active');
+    }
+
+    if(activeTab === 'Today' || activeTab === 'Tomorrow') {
+      const dateTasks = taskManager.getDateBasedTasks(date);
+      DOM.showTasks(dateTasks);
+    }
   };
 
   const renameProject = (projectName, newProjectName) => {
@@ -78,6 +93,7 @@ const projectManager = (() => {
         break;
       case 'remove':
         removeProject(event);
+        addToLocalStorage();
         break;
     }
   };
@@ -96,3 +112,4 @@ const projectManager = (() => {
 })();
 
 export default projectManager;
+

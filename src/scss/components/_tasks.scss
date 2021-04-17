@@ -15,15 +15,15 @@
   &__task {
     border-bottom: 1px solid var(--opWhite);
     &:first-child {
-      padding-bottom: 0.5rem;
+      padding-bottom: 0.1rem;
       padding-top: 0;
     }
     &:last-child {
-      padding-top: 0.5rem;
+      padding-top: 0.1rem;
       padding-bottom: 0;
       border: none;
     }
-    padding: 0.5rem 0;
+    padding-top: 0.1rem;
   }
 }
 
@@ -32,6 +32,7 @@
   transform: translateY(0);
   transition: opacity 0.2s ease, background 0.2s ease;
   opacity: 0.3;
+  margin-bottom: 1rem;
   &:hover {
     opacity: 1;
     background: none;
@@ -47,6 +48,7 @@
 
 .c-todo-form {
   gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .c-form {
@@ -64,7 +66,7 @@
       flex: 1;
     }
   }
-  &__text--area {
+  &__text-area {
     border: none;
     line-height: 4ch;
     background-image: linear-gradient(
@@ -93,6 +95,21 @@
 
 .c-task-project-name {
   color: var(--main);
+}
+
+.c-task-notes {
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  height: 100%;
+  transform: scaleY(1);
+  transform-origin: top;
+  resize: vertical;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  &--collapsed {
+    transform: scaleY(0);
+    height: 0;
+  }
 }
 
 .c-edit-form {

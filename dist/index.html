@@ -72,7 +72,7 @@
                     </svg></button>
             </div>
             <div class="c-todo-form l-flex">
-                <form class="c-form c-form--tasks l-flexColumn js-todo-from">
+                <form class="c-form c-form--tasks l-flexColumn js-todo-from" name="ffBug">
                     <div class="l-flexColumn">
                         <label for="title">Task name</label>
                         <input class="c-form__text" type="text" id="title" name="title" placeholder="Task name" required
@@ -80,7 +80,7 @@
                     </div>
                     <div class="l-flexColumn">
                         <label for="notes">Notes</label>
-                        <textarea class="c-form__text c-form__text--area" name="notes" id="notes" rows="3"
+                        <textarea class="c-form__text c-form__text-area" name="notes" id="notes" rows="3"
                             placeholder="Task notes"></textarea>
                     </div>
                     <div class="c-form__pickers">
@@ -90,7 +90,7 @@
                         </div>
                         <div class="l-flexColumn">
                             <label for="priority">Priority</label>
-                            <select class="c-form__priority" id="priority" name="priority" autocomplete="off">
+                            <select class="c-form__priority" id="priority" name="priority">
                                 <option selected value="3">Low</option>
                                 <option value="2">Medium</option>
                                 <option value="1">High</option>
@@ -98,8 +98,7 @@
                         </div>
                         <div class="l-flexColumn">
                             <label for="project">Project</label>
-                            <select class="c-form__project js-projects" id="project" name="project"
-                                autocomplete="off"></select>
+                            <select class="c-form__project js-projects" id="project" name="project"></select>
                         </div>
                     </div>
                     <div class="c-form__ui">
@@ -120,9 +119,7 @@
             </div>
         </section>
     </main>
-
     <div class="printMsg js-printMsg"></div>
-
 </body>
 
 </html>

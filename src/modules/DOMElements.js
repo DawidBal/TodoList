@@ -3,8 +3,8 @@ import projectManager from './projectManager.js';
 import { format } from 'date-fns';
 import { startOfToday, startOfTomorrow } from 'date-fns';
 
-// TODO: Divide this module into two modules - Task DOM module, and Projects DOM module.
 const DOM = (() => {
+  
   // Utilities
   const taskForm = document.querySelector('.js-todo-from');
   const taskList = document.querySelector('.js-tasklist');
@@ -96,6 +96,8 @@ const DOM = (() => {
     setTaskFormOptions();
     fireEvents();
     setInputDateToday();
+    inboxBtn.classList.add('btn--active')
+    showTasks(taskManager.getTasksByProject(projectManager.getActiveTab()));
   };
 
   // Tasks
@@ -147,6 +149,7 @@ const DOM = (() => {
     <p class="c-task-project-name">${task.project}</p>
   </div>
 </div>
+<textarea class="c-form__text c-form__text-area c-task-notes c-task-notes--collapsed" disabled>${task.notes}</textarea>
 `;
 
     return newTask;
@@ -166,6 +169,14 @@ const DOM = (() => {
   const showTask = (task, index) =>
     taskList.append(generateTaskHTML(task, index));
 
+  const showTimeTasks = (date, e) => {
+    classHandler(e, 'btn--active');
+    updateListTitle(e.target.textContent);
+    projectManager.setActiveTab();
+    const dateTasks = taskManager.getDateBasedTasks(date);
+    showTasks(dateTasks);
+  };
+
   const removeTaskElement = (index) => {
     const element = document.querySelector(`[data-index="${index}"`);
     element.remove();
@@ -181,14 +192,12 @@ const DOM = (() => {
     }
   };
 
-  const showTimeTasks = (date, e) => {
-    classHandler(e, 'btn--active');
-    updateListTitle(e.target.textContent);
-    projectManager.setActiveTab();
-    const tasks = taskManager.tasks.filter((task) => {
-      return new Date(task.endDate).getDate() - date.getDate() === 0;
-    });
-    showTasks(tasks);
+  const expandTask = (event) => {
+    const taskElement = event.target.closest('.c-tasklist__task');
+    const textArea = taskElement.querySelector('textarea');
+    const expandIcon = taskElement.querySelector('[data-action="expand"]');
+    expandIcon.classList.toggle('btn--task--active');
+    textArea.classList.toggle('c-task-notes--collapsed');
   };
 
   const createTaskEditHTML = (task) => {
@@ -209,7 +218,7 @@ const DOM = (() => {
         </div>
         <div class="l-flexColumn">
             <label for="notes">Notes</label>
-            <textarea class="c-form__text c-form__text--area" name="notes" id="notes" rows="3" cols="10"
+            <textarea class="c-form__text c-form__text-area" name="notes" id="notes" rows="3" cols="10"
                 placeholder="Task notes">${task.notes}</textarea>
         </div>
         <div class="c-form__pickers">
@@ -385,8 +394,11 @@ const DOM = (() => {
     setActiveOption,
     printMessage,
     classHandler,
+    expandTask,
     updateListTitle,
     updateTask,
+    startOfToday,
+    startOfTomorrow,
     init,
   };
 })();

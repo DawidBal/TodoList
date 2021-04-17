@@ -53,10 +53,13 @@ body {
 
   &--task {
     opacity: 0.3;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     &:hover {
       opacity: 1;
       background: none;
+    }
+    &--active {
+      transform: rotate(180deg);
     }
   }
 

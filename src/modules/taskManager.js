@@ -4,7 +4,7 @@ import projectManager from './projectManager';
 import {format, differenceInCalendarDays } from 'date-fns'
 
 const taskManager = (() => {
-  const tasks = [];
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
   let visibleTasks = [];
 
@@ -14,7 +14,10 @@ const taskManager = (() => {
   
   const addItemToArray = (arr, item) => arr.push(item);
 
-    // TODO: Refactor function - Split into smaller funcitons, think about where to put DOM method.
+  const addToLocalStorage = () => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+
   const addNewTask = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -25,6 +28,7 @@ const taskManager = (() => {
       visibleTasks.push(newTodo);
     }
     DOM.removeTaskForm();
+    addToLocalStorage();
     e.target.reset();
   };
   
@@ -49,11 +53,18 @@ const taskManager = (() => {
      } else {
        return format(new Date(task.endDate), 'dd.MM');
      }
-
   };
+
+  const getDateBasedTasks = (date) => {
+   const dateTasks = tasks.filter((task) => {
+      return new Date(task.endDate).getDate() - date.getDate() === 0;
+    });
+    return dateTasks;
+  }
 
   const changeTasksProject = (tasks, projectName) => {
     tasks.forEach((task) => (task.project = projectName));
+    addToLocalStorage();
   };
 
   const toggleTaskCompletion = (task) => {
@@ -66,9 +77,10 @@ const taskManager = (() => {
     switch (action) {
       case 'toggle':
         toggleTaskCompletion(tasks[taskIndex]);
+        addToLocalStorage();
         break;
       case 'expand':
-        console.log('Expandind');
+        DOM.expandTask(event);
         break;
       case 'edit':
         if(tasks[taskIndex].completed === false) {
@@ -80,6 +92,7 @@ const taskManager = (() => {
         break;
       case 'remove':
         removeTask(event);
+        addToLocalStorage();
         break;
     }
   };
@@ -111,6 +124,7 @@ const taskManager = (() => {
       updateTaskData(taskIndex, updateData);
       DOM.updateTask(tasks[taskIndex], taskIndex);
       removeEditElements();
+      addToLocalStorage();
     }, {once: true})
   }
 
@@ -128,12 +142,13 @@ const taskManager = (() => {
     addNewTask,
     removeTask,
     getTasksByProject,
-    saveActiveTasks,
     getActiveTasks,
+    getTaskCompletionTime,
+    getDateBasedTasks,
+    saveActiveTasks,
     changeTasksProject,
     changeTasksProject,
     taskEventHandler,
-    getTaskCompletionTime,
   };
 })();
 
