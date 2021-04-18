@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { startOfToday, startOfTomorrow } from 'date-fns';
 
 const DOM = (() => {
-  
+
   // Utilities
   const taskForm = document.querySelector('.js-todo-from');
   const taskList = document.querySelector('.js-tasklist');
@@ -19,6 +19,7 @@ const DOM = (() => {
   const todayBtn = document.querySelector('.js-today');
   const tomorrowBtn = document.querySelector('.js-tomorrow');
   const printMsg = document.querySelector('.js-printMsg');
+  const menuBtn = document.querySelector('.js-menu-btn');
 
   const defaultTab = projectManager.getDefaultTab();
 
@@ -121,7 +122,7 @@ const DOM = (() => {
     </label>
   </div>
   <div class="c-task-options l-flex l-aI-c">
-    <button class="btn btn--task l-flex l-aI-c" data-action="expand">
+    <button class="btn btn--task l-flex l-aI-c" data-action="expand" aria-expanded="false">
       <svg class="icon icon--task" data-action="expand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path data-action="expand" d="M23.245 4l-11.245 14.374-11.219-14.374-.781.619 12 15.381 12-15.391-.755-.609z" />
       </svg>
@@ -197,6 +198,7 @@ const DOM = (() => {
     const textArea = taskElement.querySelector('textarea');
     const expandIcon = taskElement.querySelector('[data-action="expand"]');
     expandIcon.classList.toggle('btn--task--active');
+    expandIcon.setAttribute('aria-expanded', expandIcon.classList.contains('btn--task--active'));
     textArea.classList.toggle('c-task-notes--collapsed');
   };
 
@@ -349,6 +351,13 @@ const DOM = (() => {
     toggler.style.display = 'none';
   };
 
+  const showMenu = () => {
+    const projectsElement = document.querySelector('.c-projects');
+    menuBtn.classList.toggle('c-header__menu-btn--active');
+    menuBtn.setAttribute('aria-expanded', menuBtn.classList.contains('c-header__menu-btn--active'));
+    projectsElement.classList.toggle('c-projects--active');
+  }
+
   const removeForm = (form, toggler) => {
     form.parentElement.style.display = 'none';
     toggler.style.display = 'flex';
@@ -373,6 +382,8 @@ const DOM = (() => {
     inboxBtn.addEventListener('click', projectManager.switchActiveTab);
     todayBtn.addEventListener('click', showTimeTasks.bind(null, startOfToday()));
     tomorrowBtn.addEventListener('click', showTimeTasks.bind(null, startOfTomorrow()));
+
+    menuBtn.addEventListener('click', showMenu);
   };
 
   return {

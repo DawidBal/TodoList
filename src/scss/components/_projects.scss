@@ -1,8 +1,19 @@
 @use '../animations';
+@use '../variables';
 
 .c-projects {
+  position: absolute;
   padding: 1rem;
+  height: calc(100vh - 5rem);
+  width: 100vw;
   background: var(--bg-aside);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1;
+
+  &--active {
+    transform: translateY(0);
+  }
 
   &__nav {
     flex: 1;
@@ -21,36 +32,54 @@
     width: 100%;
     animation: fadeIn-left 0.2s ease;
     transition: color 0.2s ease;
-    &:hover {
-      color: var(--main);
-      & .icon--project {
-        opacity: 0.4;
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
+    padding-right: 1rem;
   }
+
   &__list {
-    max-height: 55vh;
+    max-height: 30vh;
     overflow-y: auto;
   }
+
   &__icons {
     display: flex;
     gap: 0.5rem;
   }
 }
 
-@media only screen and (max-width: 599px) {
-  .c-show-form__btn {
-    opacity: 1;
+.c-show-form {
+  &__icon {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    transform: translateY(0%);
+    transition: opacity 0.2s ease, transform 0.4s ease;
   }
 }
 
-@media only screen and (min-width: 600px) {
+.c-form--project {
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--btn-hover);
+  border-radius: 5px;
+}
+
+.moveOut-left {
+  animation: moveOut-left 0.2s ease;
+}
+
+@media only screen and (min-width: variables.$desktop-bp) {
   .c-projects {
     flex: 1;
     max-width: 40ch;
+    display: flex;
+    transform: translateX(0);
+    position: relative;
+    height: 100%;
 
     &__nav {
       &:hover .c-show-form__btn {
@@ -71,31 +100,23 @@
     }
     .c-show-form__btn {
       opacity: 0;
+      transform: translateY(-100%);
+    }
+
+    &__list {
+      max-height: 55vh;
+    }
+
+    &__item {
+      &:hover {
+        color: var(--main);
+        & .icon--project {
+          opacity: 0.4;
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
     }
   }
-}
-
-.c-show-form {
-  &__icon {
-    transition: transform 0.3s ease-in-out;
-  }
-  &__btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    transform: translateY(-100%);
-    transition: opacity 0.2s ease, transform 0.4s ease;
-  }
-}
-
-.c-form--project {
-  gap: 0.5rem;
-  padding: 1rem;
-  background: var(--btn-hover);
-  border-radius: 5px;
-}
-
-.moveOut-left {
-  animation: moveOut-left 0.2s ease;
 }

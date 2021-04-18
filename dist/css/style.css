@@ -87,6 +87,7 @@ body {
   border: none;
   border-radius: 5px;
   transition: background 0.4s ease;
+  cursor: pointer;
 }
 .btn:hover {
   background: var(--btn-hover);
@@ -100,11 +101,14 @@ body {
 }
 .btn--task {
   opacity: 0.3;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .btn--task:hover {
   opacity: 1;
   background: none;
+}
+.btn--task--active {
+  transform: rotate(180deg);
 }
 .btn--form {
   display: flex;
@@ -138,42 +142,42 @@ body {
   transition: opacity 0.3s ease;
 }
 
-@media only screen and (min-width: 600px) {
-  .printMsg {
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 2rem 4rem;
-    margin: 2rem;
-    background: var(--printMsgColor);
-    font-size: 1.1rem;
-    color: var(--printTextColor, var(--bg));
-    font-weight: bold;
-    border-radius: 1rem;
-    opacity: 0;
-    transition: opacity 0.2s ease, transform 0.4s ease;
-    transform: translateY(-200%);
-  }
-  .printMsg.fadeIn-up {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  .printMsg::before {
-    content: "";
-    position: absolute;
-    top: -60px;
-    left: 50%;
-    margin-left: -2rem;
-    border-width: 2rem;
-    border-style: solid;
-    border-color: var(--printMsgColor) transparent transparent transparent;
-    transform: rotate(180deg);
-  }
+.printMsg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 2rem 4rem;
+  margin: 2rem;
+  background: var(--printMsgColor);
+  font-size: 1.1rem;
+  color: var(--printTextColor, var(--bg));
+  font-weight: bold;
+  border-radius: 1rem;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.4s ease;
+  transform: translateY(-200%);
 }
+.printMsg.fadeIn-up {
+  transform: translateY(0);
+  opacity: 1;
+}
+.printMsg::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  margin-left: -2rem;
+  border-width: 2rem;
+  border-style: solid;
+  border-color: var(--printMsgColor) transparent transparent transparent;
+  transform: rotate(180deg);
+}
+
 .c-form {
   animation: fadeIn 0.3s ease;
 }
 .c-form__text {
+  width: 100%;
   margin-top: 0.5rem;
   border: none;
   border-bottom: 1px solid var(--main);
@@ -194,6 +198,7 @@ body {
   gap: 0.4rem;
   font-size: 1rem;
   color: var(--white);
+  cursor: pointer;
 }
 
 .checkbox__control {
@@ -237,13 +242,52 @@ body {
   width: 100vw;
   height: 100vh;
   background: var(--black);
-  opacity: 0.5;
+  opacity: 0.8;
+  opacity: 0.8;
   z-index: 1;
 }
 
+@media only screen and (max-width: 700px) {
+  .printMsg {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    margin: 1rem;
+  }
+  .printMsg::before {
+    border-width: 1rem;
+    margin-left: -1rem;
+    top: -30px;
+    left: 50%;
+  }
+
+  .icon--project {
+    opacity: 1;
+  }
+}
+.sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .c-projects {
+  position: absolute;
   padding: 1rem;
+  height: calc(100vh - 5rem);
+  width: 100vw;
   background: var(--bg-aside);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+.c-projects--active {
+  transform: translateY(0);
 }
 .c-projects__nav {
   flex: 1;
@@ -260,18 +304,10 @@ body {
   width: 100%;
   animation: fadeIn-left 0.2s ease;
   transition: color 0.2s ease;
-}
-.c-projects__item:hover {
-  color: var(--main);
-}
-.c-projects__item:hover .icon--project {
-  opacity: 0.4;
-}
-.c-projects__item:hover .icon--project:hover {
-  opacity: 1;
+  padding-right: 1rem;
 }
 .c-projects__list {
-  max-height: 85%;
+  max-height: 30vh;
   overflow-y: auto;
 }
 .c-projects__icons {
@@ -279,15 +315,37 @@ body {
   gap: 0.5rem;
 }
 
-@media only screen and (max-width: 599px) {
-  .c-show-form__btn {
-    opacity: 1;
-  }
+.c-show-form__icon {
+  transition: transform 0.3s ease-in-out;
 }
-@media only screen and (min-width: 600px) {
+.c-show-form__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  transform: translateY(0%);
+  transition: opacity 0.2s ease, transform 0.4s ease;
+}
+
+.c-form--project {
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--btn-hover);
+  border-radius: 5px;
+}
+
+.moveOut-left {
+  animation: moveOut-left 0.2s ease;
+}
+
+@media only screen and (min-width: 700px) {
   .c-projects {
     flex: 1;
     max-width: 40ch;
+    display: flex;
+    transform: translateX(0);
+    position: relative;
+    height: 100%;
   }
   .c-projects__nav:hover .c-show-form__btn {
     transform: translateY(0);
@@ -304,31 +362,21 @@ body {
   }
   .c-projects .c-show-form__btn {
     opacity: 0;
+    transform: translateY(-100%);
+  }
+  .c-projects__list {
+    max-height: 55vh;
+  }
+  .c-projects__item:hover {
+    color: var(--main);
+  }
+  .c-projects__item:hover .icon--project {
+    opacity: 0.4;
+  }
+  .c-projects__item:hover .icon--project:hover {
+    opacity: 1;
   }
 }
-.c-show-form__icon {
-  transition: transform 0.3s ease-in-out;
-}
-.c-show-form__btn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  transform: translateY(-100%);
-  transition: opacity 0.2s ease, transform 0.4s ease;
-}
-
-.c-form--project {
-  gap: 0.5rem;
-  padding: 1rem;
-  background: var(--btn-hover);
-  border-radius: 5px;
-}
-
-.moveOut-left {
-  animation: moveOut-left 0.2s ease;
-}
-
 .c-tasklist {
   flex: 3;
   gap: 0.5rem;
@@ -346,14 +394,14 @@ body {
 }
 .c-tasklist__task {
   border-bottom: 1px solid var(--opWhite);
-  padding: 0.5rem 0;
+  padding-top: 0.1rem;
 }
 .c-tasklist__task:first-child {
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.1rem;
   padding-top: 0;
 }
 .c-tasklist__task:last-child {
-  padding-top: 0.5rem;
+  padding-top: 0.1rem;
   padding-bottom: 0;
   border: none;
 }
@@ -363,6 +411,7 @@ body {
   transform: translateY(0);
   transition: opacity 0.2s ease, background 0.2s ease;
   opacity: 0.3;
+  margin-bottom: 1rem;
 }
 .c-show-form__btn--task:hover {
   opacity: 1;
@@ -378,6 +427,7 @@ body {
 
 .c-todo-form {
   gap: 1rem;
+  margin: 0 1rem 1rem 1rem;
 }
 
 .c-form--tasks {
@@ -391,7 +441,7 @@ body {
 .c-form__pickers > .l-flexColumn {
   flex: 1;
 }
-.c-form__text--area {
+.c-form__text-area {
   border: none;
   line-height: 4ch;
   background-image: linear-gradient(transparent, transparent calc(4ch - 1px), var(--main) 0px);
@@ -417,6 +467,21 @@ body {
   color: var(--main);
 }
 
+.c-task-notes {
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  height: 100%;
+  transform: scaleY(1);
+  transform-origin: top;
+  resize: vertical;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+.c-task-notes--collapsed {
+  transform: scaleY(0);
+  height: 0;
+}
+
 .c-edit-form {
   z-index: 2;
   position: absolute;
@@ -425,12 +490,60 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.menu-burger {
+  position: relative;
+}
+.menu-burger, .menu-burger::before, .menu-burger::after {
+  display: inline-block;
+  width: 100%;
+  height: 0.1rem;
+  background-color: var(--white);
+  border-radius: 5px;
+  transition: transform 0.4s ease, background 0.25s ease;
+}
+.menu-burger::before, .menu-burger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+.menu-burger::before {
+  transform: translateY(-0.5rem);
+}
+.menu-burger::after {
+  transform: translateY(0.5rem);
+}
+
 .c-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem;
   width: 100%;
   padding: 1rem;
+}
+.c-header__menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  margin: 0;
+  transition: none;
+}
+.c-header__menu-btn:hover {
+  background: transparent;
+}
+.c-header__menu-btn--active .menu-burger {
+  transform: translateX(-100px);
+  background-color: transparent;
+}
+.c-header__menu-btn--active .menu-burger::before {
+  transform: rotate(45deg) translate(4.4rem, -4.4rem);
+}
+.c-header__menu-btn--active .menu-burger::after {
+  transform: rotate(-45deg) translate(4.4rem, 4.4rem);
 }
 .c-header__logo {
   width: 35px;
@@ -444,6 +557,12 @@ body {
 .c-todo-form,
 .c-projects-form {
   display: none;
+}
+
+@media only screen and (min-width: 700px) {
+  .c-header__menu-btn {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
