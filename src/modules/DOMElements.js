@@ -3,8 +3,6 @@ import projectManager from './projectManager.js';
 import { format } from 'date-fns';
 import { startOfToday, startOfTomorrow } from 'date-fns';
 
-const DOM = (() => {
-
   // Utilities
   const taskForm = document.querySelector('.js-todo-from');
   const taskList = document.querySelector('.js-tasklist');
@@ -386,7 +384,7 @@ const DOM = (() => {
     menuBtn.addEventListener('click', showMenu);
   };
 
-  return {
+  export default {
     taskForm,
     taskList,
     types,
@@ -412,6 +410,5 @@ const DOM = (() => {
     startOfTomorrow,
     init,
   };
-})();
 
-export default DOM;
+

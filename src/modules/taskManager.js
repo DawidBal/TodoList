@@ -3,7 +3,6 @@ import todoItem from './todoCreation.js';
 import projectManager from './projectManager';
 import {format, differenceInCalendarDays } from 'date-fns'
 
-const taskManager = (() => {
   const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
   let visibleTasks = [];
@@ -137,7 +136,7 @@ const taskManager = (() => {
     setTimeout(() => DOM.showTasks(visibleTasks), 175);
   };
 
-  return {
+  export default {
     tasks,
     addNewTask,
     removeTask,
@@ -150,6 +149,4 @@ const taskManager = (() => {
     changeTasksProject,
     taskEventHandler,
   };
-})();
 
-export default taskManager;

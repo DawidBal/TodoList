@@ -1,7 +1,5 @@
 import DOM from './DOMElements';
 import taskManager from './taskManager'
-
-const projectManager = (() => {
   const projects = JSON.parse(localStorage.getItem('projects')) || ['Inbox'];
 
   let activeTab = 'Inbox';
@@ -98,7 +96,7 @@ const projectManager = (() => {
     }
   };
 
-  return {
+  export default {
     getActiveTab,
     getAllProjects,
     getDefaultTab,
@@ -109,7 +107,4 @@ const projectManager = (() => {
     projectEventHandler,
     switchActiveTab
   };
-})();
-
-export default projectManager;
 
